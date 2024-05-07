@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import stylex from "@stylexjs/stylex";
 
 import { Article } from "@/types/Article";
@@ -11,9 +11,14 @@ import DesktopNavButton from "./DesktopNavButton";
 import ArticlePreview from "./ArticlePreview";
 import { createSearchParams, useNavigate } from "react-router-dom";
 
+import axios, { AxiosResponse } from 'axios';
+import { BackgroundImage } from "@/types/Image";
+
 const styles = stylex.create({
     mainContainer:{
-        backgroundColor: Background.primary,
+        backgroundRepeat: "no-repeat",
+        backgroundSize: "cover",
+        backgroundPosition: "center center",
         height: "100dvh",
         width: "100dvw",
         display: "grid",
@@ -56,6 +61,15 @@ function Main({articleData, autoScroll, onSetAutoscroll, addToHistory, onInstruc
 {
     const navigation = useNavigate();
     const [audioOn, setAudioOn] = useState<Boolean>(true);
+
+    
+    const [backgroundImage, setBackgroundImage] = useState("");
+
+    useEffect(() => {
+        axios.get("api/getImage.php?type=main").then(
+            (res: AxiosResponse<BackgroundImage>) => setBackgroundImage(`url('${axios.defaults.baseURL}${res.data.url}')`)
+        );
+    }, [articleData])
     
     const article:Article = articleData.read();
     if(article === null) 
@@ -84,7 +98,7 @@ function Main({articleData, autoScroll, onSetAutoscroll, addToHistory, onInstruc
     }
 
 
-    return(<div {...stylex.props(styles.mainContainer)}>
+    return(<div {...stylex.props(styles.mainContainer)} style={{ backgroundImage }}>
             <div {...stylex.props(styles.rowFull)}>
                     <Header toggleAudio={onSetAudio} audio={audioOn} toggleAutoScroll={onSetAutoscroll} autoScroll={autoScroll} article={article} />
                 {viewInstructions? <InstructionModal onClose={onCloseInstructions} /> : null }

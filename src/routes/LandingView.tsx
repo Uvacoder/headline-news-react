@@ -1,11 +1,16 @@
 import stylex from "@stylexjs/stylex";
+import axios, { AxiosResponse } from 'axios';
 
-import { Background } from "../styles/token.stylex";
 import { useNavigate } from "react-router-dom";
+import { BackgroundImage } from "@/types/Image";
+import { useEffect, useState } from "react";
 
 const styles = stylex.create({
     mainContainer:{
-        backgroundColor: Background.secondary,
+        backgroundImage: "url('http://localhost/api/images/intro/Trum1p yelling cropped.jpg')",
+        backgroundRepeat: "no-repeat",
+        backgroundSize: "cover",
+        backgroundPosition: "center center",
         height: "100dvh",
         width: "100dvw",
         display: "grid",
@@ -25,7 +30,7 @@ const styles = stylex.create({
         rowGap: "2rem",
         textAlign: "center",
         fontSize: "1.5em",
-        // color: "white"
+        color: "white"
     },
     rowFull: {
         gridColumnStart: "1",
@@ -36,13 +41,20 @@ const styles = stylex.create({
 function LandingView()
 {
     const navigator = useNavigate();
+    const [backgroundImage, setBackgroundImage] = useState("");
+
+    useEffect(() => {
+        axios.get("api/getImage.php?type=intro").then(
+            (res: AxiosResponse<BackgroundImage>) => setBackgroundImage(`url('${axios.defaults.baseURL}${res.data.url}')`)
+        );
+    }, [])
 
     const onToMainView = ()=>
     {
         navigator("/view");
     }
 
-    return(<div {...stylex.props(styles.mainContainer)} onClick={onToMainView}>
+    return(<div {...stylex.props(styles.mainContainer)} style={{backgroundImage}} onClick={onToMainView}>
         <div {...stylex.props(styles.rowFull)}>
             {/* <MobileNavHint><IconArrowBigUp>Swipe Up for Next Headline</IconArrowBigUp></MobileNavHint> */}
         </div>
