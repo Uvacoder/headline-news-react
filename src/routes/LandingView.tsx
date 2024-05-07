@@ -60,9 +60,10 @@ function LandingView()
         </div>
         {/* <MobileNavHint><IconArrowBigLeft>Swipe Left for Loser and Lies</IconArrowBigLeft></MobileNavHint> */}
         <div {...stylex.props(styles.content)}>
-            <p>Explore all the reasons why Donald Trump and his allies are the wrong choice for the USA and for you in 2024.</p>
-            <p>Support a better canidate for 2024 and ask your ploiticians to get back to work</p>
-            <p>Click or Tap to continue</p>
+            <h1 style={{color: "black"}}>Welcome to Trump Headshakers</h1>
+            <p>This is a scrollable collection of thousands of lies, mean comments, misinformation, and bizarre behavior by one Donald Trump and his enablers.</p>
+            <p>Every post is supported by its source.<br />Email for any suggestions, additions, or corrections.</p>
+            <p>Click to Enter</p>
         </div>
         {/* <MobileNavHint><IconArrowBigRight>Swipe Right for rudeness & wrong</IconArrowBigRight></MobileNavHint> */}
         <div {...stylex.props(styles.rowFull)}>
