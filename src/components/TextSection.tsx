@@ -13,6 +13,7 @@ const styles = stylex.create({
         display: "flex",
         justifyContent: "center",
         alignItems: "center",
+        minHeight: "40px"
     },
     text:{
         color: "white",
@@ -33,14 +34,14 @@ interface Props
 {
     children:ReactNode,
     backgroundColor:string,
-    lines:number
+    lines?:number
 }
 
 function TextSection({children, backgroundColor, lines}: Props)
 {
     return(
         <div {...stylex.props(styles.TextSection)} style={{ backgroundColor }}>
-            <div {...stylex.props(styles.text)} style={{ WebkitLineClamp: lines }}>{children}</div>
+            <div {...stylex.props(styles.text)} style={ lines ? { WebkitLineClamp: lines } : {} }>{children}</div>
         </div>
     )
 }
