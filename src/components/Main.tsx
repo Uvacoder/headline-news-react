@@ -100,7 +100,7 @@ function Main({articleData, autoScroll, onSetAutoscroll, addToHistory, onInstruc
 
     return(<div {...stylex.props(styles.mainContainer)} style={{ backgroundImage }}>
             <div {...stylex.props(styles.rowFull)}>
-                    <Header toggleAudio={onSetAudio} audio={audioOn} toggleAutoScroll={onSetAutoscroll} autoScroll={autoScroll} article={article} />
+                    <Header toggleAudio={onSetAudio} audio={audioOn} toggleAutoScroll={onSetAutoscroll} autoScroll={autoScroll} article={article}/>
                 {viewInstructions? <InstructionModal onClose={onCloseInstructions} /> : null }
             </div>
             <div {...stylex.props(styles.rowFull)}>

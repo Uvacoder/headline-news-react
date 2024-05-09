@@ -4,6 +4,10 @@ import axios, { AxiosResponse } from 'axios';
 import { useNavigate } from "react-router-dom";
 import { BackgroundImage } from "@/types/Image";
 import { useEffect, useState } from "react";
+import UpArrow from "../assets/uparrow.svg";
+import DownArrow from "../assets/downarrow.svg";
+import LeftArrow from "../assets/leftarrow.svg";
+import RightArrow from "../assets/rightarrow.svg";
 
 const styles = stylex.create({
     mainContainer:{
@@ -19,27 +23,24 @@ const styles = stylex.create({
         gridTemplateRows: "minmax(min-content, .1fr) auto minmax(min-content, .1fr)",
         gridTemplateColumns: ".1fr .8fr .1fr"
      },
-    content:{
+    content: {
         gridColumnStart: "2",
+        gridRowStart: "2",
         display: "grid",
         height: "100%",
         width: "100%",
         alignItems: "center",
         justifyItems: "center",
-        gridTemplateRows: ".4fr .4fr .2fr",
-        rowGap: "2rem",
+        rowGap: "0.5rem",
         textAlign: "center",
         fontSize: "1.5em",
+        marginTop: "1.5em",
         color: "white",
         textShadow: "2px 2px 4px black"
     },
-    rowFull: {
-        gridColumnStart: "1",
-        gridColumnEnd: "4",
-    }
 });
 
-function LandingView()
+function InstructionView()
 {
     const navigator = useNavigate();
     const [backgroundImage, setBackgroundImage] = useState("");
@@ -50,27 +51,25 @@ function LandingView()
         );
     }, [])
 
-    const onNextView = ()=>
+    const onToMainView = ()=>
     {
-        navigator("/instruction");
+        navigator("/view");
     }
 
-    return(<div {...stylex.props(styles.mainContainer)} style={{backgroundImage}} onClick={onNextView}>
-        <div {...stylex.props(styles.rowFull)}>
-            {/* <MobileNavHint><IconArrowBigUp>Swipe Up for Next Headline</IconArrowBigUp></MobileNavHint> */}
-        </div>
-        {/* <MobileNavHint><IconArrowBigLeft>Swipe Left for Loser and Lies</IconArrowBigLeft></MobileNavHint> */}
+    return (<div {...stylex.props(styles.mainContainer)} style={{backgroundImage}} onClick={onToMainView}>
         <div {...stylex.props(styles.content)}>
-            <h2 style={{color: "black"}}>Welcome to Trump Headshakers</h2>
-            <p>This is a scrollable collection of thousands of lies, mean comments, misinformation, and bizarre behavior by one Donald Trump and his enablers.</p>
-            <p>Every post is supported by its source. Email for any suggestions, additions, or corrections.</p>
-            <p>Click to Enter</p>
-        </div>
-        {/* <MobileNavHint><IconArrowBigRight>Swipe Right for rudeness & wrong</IconArrowBigRight></MobileNavHint> */}
-        <div {...stylex.props(styles.rowFull)}>
-        {/* <MobileNavHint><IconArrowBigDown>Swipe down to go back</IconArrowBigDown></MobileNavHint> */}
+            <img src={UpArrow} width={"100px"}/>
+            <p>Explore all the reasons why Donald Trump and his allies are the wrong choice for the USA and for you in 2024</p>
+            <div style={{ display: "flex", justifyContent: "space-between", width: "100%" }}>
+                <img src={LeftArrow} width={"100px"}/>
+                <img src={RightArrow} width={"100px"}/>
+            </div>
+            
+            <p>Support a better candidate for 2024 and ask your politicians to get back to work</p>
+            <img src={DownArrow} width={"100px"}/>
+            <p>Click to Continue</p>
         </div>
     </div>);
 }
 
-export default LandingView;
+export default InstructionView;

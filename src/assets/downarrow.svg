@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<svg viewBox="0 0 500 500" xmlns="http://www.w3.org/2000/svg" xmlns:bx="https://boxy-svg.com">
+  <defs/>
+  <path d="M 630.727 3361.198 H 903.736 L 903.736 3254.516 L 1113.74 3467.881 L 903.736 3681.246 L 903.736 3574.563 H 630.727 V 3361.198 Z" style="stroke: rgb(0, 0, 0); fill: rgba(128, 240, 128, 0.376); stroke-width: 2px; transform-box: fill-box; transform-origin: 50% 50%;" transform="matrix(0.003724, 0.999993, -0.999993, 0.003724, -626.409663, -3216.660807)" bx:shape="arrow 630.727 3254.516 483.013 426.73 213.365 210.004 0 1@15fdf2e1"/>
+  <text style="fill: rgb(255, 255, 255); font-family: Arial, sans-serif; font-size: 72px; text-anchor: middle; white-space: pre;" transform="matrix(1, 0, 0, 1, 37.999939, -74.600464)"><tspan x="208.307" y="256.6">Next</tspan><tspan x="208.3070068359375" dy="1.1em">​</tspan><tspan>Head<tspan x="208.3070068359375" dy="1.1em">​</tspan>line</tspan></text>
+</svg>

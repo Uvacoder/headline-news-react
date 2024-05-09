@@ -35,9 +35,9 @@ function ArticlePreview({article}:Props)
     return(
         
             <div {...stylex.props(containerStyle)}>
-                <TextSection>{article.shortHeadline}</TextSection>
-                <TextSection>{article.summary}</TextSection>
-                {article.rebuttal? <TextSection>{article.rebuttal}</TextSection>: null}
+                <TextSection backgroundColor="#40404040" lines={3}>{article.shortHeadline}</TextSection>
+                <TextSection backgroundColor="#f0f0f060" lines={article.rebuttal ? 5 : 12}>{article.summary}</TextSection>
+                {article.rebuttal? <TextSection backgroundColor="#80f08060" lines={7}>{article.rebuttal}</TextSection>: null}
             </div>
     );
 }

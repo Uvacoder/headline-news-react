@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<svg viewBox="0 0 500 500" xmlns="http://www.w3.org/2000/svg" xmlns:bx="https://boxy-svg.com">
+  <defs/>
+  <path d="M 630.727 3330.638 H 909.869 L 909.869 3231.315 L 1113.74 3467.88 L 909.869 3704.445 L 909.869 3605.122 H 630.727 V 3330.638 Z" style="stroke: rgb(0, 0, 0); fill: rgba(128, 240, 128, 0.376); stroke-width: 2px; transform-box: fill-box; transform-origin: 50% 50%;" transform="matrix(0.999996, -0.002797, 0.002797, 0.999996, -621.411946, -3216.658931)" bx:shape="arrow 630.727 3231.315 483.013 473.13 274.484 203.871 0 1@a2533116"/>
+  <text style="fill: rgb(255, 255, 255); font-family: Arial, sans-serif; font-size: 72px; text-anchor: middle; white-space: pre;" transform="matrix(1, 0, 0, 1, -19.000061, -53.600464)" x="208.3070068359375" y="256.6000061035156">Right for<tspan x="208.3070068359375" dy="1em">​</tspan>rudeness<tspan x="208.3070068359375" dy="1em">​</tspan>&amp; wrong</text>
+</svg>

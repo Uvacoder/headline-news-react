@@ -111,7 +111,12 @@ function MainView({onInstructionsViewed, viewInstructions }:Props)
                 {
                     case SwipeDirection.UP:
                         setAutoscroll(false);
-                        setFetchParams({modifier: autoScrolledCount.current});
+                        if(articleHistory.current.length >= 2)
+                        {
+                            articleHistory.current.pop();
+                            const lastViewed = articleHistory.current.pop();
+                            setFetchParams({articleid: lastViewed });
+                        }
                         return;
                     
                     case SwipeDirection.LEFT:
@@ -128,12 +133,7 @@ function MainView({onInstructionsViewed, viewInstructions }:Props)
 
                     case SwipeDirection.DOWN:
                         setAutoscroll(false);
-                        if(articleHistory.current.length >= 2)
-                        {
-                            articleHistory.current.pop();
-                            const lastViewed = articleHistory.current.pop();
-                            setFetchParams({articleid: lastViewed });
-                        }
+                        setFetchParams({modifier: autoScrolledCount.current});
                         return;
                 }
             }
@@ -157,7 +157,7 @@ function MainView({onInstructionsViewed, viewInstructions }:Props)
         }
     }
 
-    return(<Suspense fallback={<LoadingFallback />} ><div onTouchStart={onTouchStart} onTouchEnd={onTouchEnd} ><Main onInstructionsViewed={onInstructionsViewed} viewInstructions={viewInstructions} articleData={article} addToHistory={addToHistory} onSetAutoscroll={(val)=>{setAutoscroll(val)}} autoScroll={autoScroll} /></div></Suspense>);
+    return(<Suspense fallback={<LoadingFallback />} ><div onTouchStart={onTouchStart} onTouchEnd={onTouchEnd} ><Main onInstructionsViewed={onInstructionsViewed} viewInstructions={false} articleData={article} addToHistory={addToHistory} onSetAutoscroll={(val)=>{setAutoscroll(val)}} autoScroll={autoScroll} /></div></Suspense>);
 }
 
 export default MainView;

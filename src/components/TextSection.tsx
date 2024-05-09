@@ -6,39 +6,41 @@ import { ReactNode } from "react";
 const styles = stylex.create({
     TextSection:
     {
-        backgroundColor: Colors.secondary,
+        border: "2px solid black",
         borderRadius: "10px",
         padding: ".5em",
         overflow: "hidden",
-        textAlign: "center"
+        display: "flex",
+        justifyContent: "center",
+        alignItems: "center",
     },
     text:{
-        margin: "0",
+        color: "white",
+        textAlign: "center",
         fontSize: "1.25em",
-        overflow: "hidden",
-    },
-    truncate:
-    {
+        
+        width: "100%",
+        maxHeight: "90%",
         textOverflow: "ellipsis",
-        WebkitLineClamp: "4",
         display: "-webkit-box",
         WebkitBoxOrient: "vertical",
-    }
+        overflow: "hidden",
+        textShadow: "2px 2px 4px black",
+    },
 });
 
 interface Props
 {
     children:ReactNode,
-    truncate?:boolean
+    backgroundColor:string,
+    lines:number
 }
 
-function TextSection({children, truncate=false}: Props)
+function TextSection({children, backgroundColor, lines}: Props)
 {
-    const opstyle = truncate? styles.truncate: null;
-
     return(
-        <div {...stylex.props(styles.TextSection)}>
-            <div {...stylex.props(styles.text, opstyle)}>{children}</div>
+        <div {...stylex.props(styles.TextSection)} style={{ backgroundColor }}>
+            <div {...stylex.props(styles.text)} style={{ WebkitLineClamp: lines }}>{children}</div>
         </div>
     )
 }

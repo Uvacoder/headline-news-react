@@ -1,0 +1,5 @@
+<svg viewBox="0 0 500 500" xmlns="http://www.w3.org/2000/svg" xmlns:bx="https://boxy-svg.com">
+  <defs/>
+  <path d="M 630.727 3361.199 H 903.736 L 903.736 3254.517 L 1113.74 3467.882 L 903.736 3681.246 L 903.736 3574.564 H 630.727 V 3361.199 Z" style="stroke: rgb(0, 0, 0); fill: rgba(128, 240, 128, 0.376); stroke-width: 2px;" transform="matrix(-0.004831, -0.999988, 0.999988, -0.004831, -3217.802979, 1140.195313)" bx:shape="arrow 630.727 3254.517 483.013 426.73 213.365 210.004 0 1@6f610d19"/>
+  <text style="fill: rgb(255, 255, 255); font-family: Arial, sans-serif; font-size: 72px; text-anchor: middle; white-space: pre;" transform="matrix(1, 0, 0, 1, 38.999939, 6.399536)"><tspan x="208.307" y="256.6">Go</tspan><tspan x="208.307" dy="1.1em">​</tspan><tspan>Back</tspan></text>
+</svg>

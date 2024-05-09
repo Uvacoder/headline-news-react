@@ -8,15 +8,14 @@ import { Link } from "react-router-dom";
 
 const styles = stylex.create({
     menuButton: {
-        margin: ".25rem",
-        backgroundColor:{
-            default: Background.primary,
-            ":hover": Background.secondary
-        }
+        height: "58px",
+        backgroundColor: "transparent",
+        display: "flex",
+        alignItems: "center"
     },
     menuButtonExpanded:{
         margin: ".25rem",
-        backgroundColor:{
+        backgroundColor: {
             default: Background.secondary,
         }
     },
