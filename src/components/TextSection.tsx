@@ -1,6 +1,4 @@
 import stylex from "@stylexjs/stylex";
-
-import {Colors} from "../styles/token.stylex";
 import { ReactNode } from "react";
 
 const styles = stylex.create({

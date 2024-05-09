@@ -7,7 +7,6 @@ import { useEffect, useState } from "react";
 
 const styles = stylex.create({
     mainContainer:{
-        backgroundImage: "url('http://localhost/api/images/intro/Trum1p yelling cropped.jpg')",
         backgroundRepeat: "no-repeat",
         backgroundSize: "cover",
         backgroundPosition: "center center",

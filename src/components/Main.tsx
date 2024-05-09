@@ -53,7 +53,9 @@ function Main({articleData, autoScroll, onSetAutoscroll, addToHistory, onSwipe}:
     const article:Article = articleData.read();
     if(article === null) 
     {
-        location.href = "/view";
+        onSwipe(SwipeDirection.UP);
+        navigation("/view");
+        return;
     }
 
     addToHistory(article.id);

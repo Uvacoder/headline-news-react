@@ -27,6 +27,7 @@ const styles = stylex.create({
         display: "flex",
         alignItems: "center",
         color: "white",
+        textShadow: "2px 2px 4px black",
         gap: "0.5em"
     }
 });
