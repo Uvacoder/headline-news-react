@@ -2,7 +2,7 @@ import { Suspense, useEffect, useRef, useState, TouchEvent } from "react";
 import { Article } from "@/types/Article";
 import useFetchApi from "@/hooks/useFetchApi";
 import ArticleFetchParams from "@/types/ArticleFetchParams";
-import Main from "@/components/Main";
+import Main, { SwipeDirection } from "@/components/Main";
 import LoadingFallback from "@/components/LoadingFallback";
 
 interface TouchPoint
@@ -11,25 +11,9 @@ interface TouchPoint
     y:number
 }
 
-export enum SwipeDirection
-{
-    LEFT = "left",
-    LEFT_UP = "left up",
-    UP = "up",
-    RIGHT_UP = "right up",
-    RIGHT = "right",
-    RIGHT_DOWN = "right down",
-    DOWN = "down",
-    LEFT_DOWN = "left down",
-    UNKNOWN = "error"
-}
 
-interface Props{
-    onInstructionsViewed: ()=> void,
-    viewInstructions:boolean
-}
 
-function MainView({onInstructionsViewed, viewInstructions }:Props)
+function MainView()
 {
     const [autoScroll, setAutoscroll] = useState<boolean>(true);
     const [fetchParams, setFetchParams] = useState<ArticleFetchParams>({latest: true});
@@ -107,35 +91,7 @@ function MainView({onInstructionsViewed, viewInstructions }:Props)
             {
                 const radians = Math.atan2(deltaY, deltaX);
                 const dir = angleToDirection(radians)
-                switch(dir)
-                {
-                    case SwipeDirection.UP:
-                        setAutoscroll(false);
-                        if(articleHistory.current.length >= 2)
-                        {
-                            articleHistory.current.pop();
-                            const lastViewed = articleHistory.current.pop();
-                            setFetchParams({articleid: lastViewed });
-                        }
-                        return;
-                    
-                    case SwipeDirection.LEFT:
-                        setAutoscroll(false);
-                        autoScrolledCount.current++;
-                        setFetchParams({type: "liar", modifier: autoScrolledCount.current});
-                        return;
-
-                    case SwipeDirection.RIGHT:
-                        setAutoscroll(false);
-                        autoScrolledCount.current++;
-                        setFetchParams({type: "rude", modifier: autoScrolledCount.current});
-                        return;
-
-                    case SwipeDirection.DOWN:
-                        setAutoscroll(false);
-                        setFetchParams({modifier: autoScrolledCount.current});
-                        return;
-                }
+                doSwipe(dir);
             }
         }
     }
@@ -157,7 +113,40 @@ function MainView({onInstructionsViewed, viewInstructions }:Props)
         }
     }
 
-    return(<Suspense fallback={<LoadingFallback />} ><div onTouchStart={onTouchStart} onTouchEnd={onTouchEnd} ><Main onInstructionsViewed={onInstructionsViewed} viewInstructions={false} articleData={article} addToHistory={addToHistory} onSetAutoscroll={(val)=>{setAutoscroll(val)}} autoScroll={autoScroll} /></div></Suspense>);
+    const doSwipe = (dir: SwipeDirection) => {
+        switch(dir)
+        {
+            case SwipeDirection.UP:
+                if(articleHistory.current.length >= 2)
+                {
+                    articleHistory.current.pop();
+                    const lastViewed = articleHistory.current.pop();
+                    setFetchParams({articleid: lastViewed });
+                }
+                return;            
+            case SwipeDirection.LEFT:
+                autoScrolledCount.current++;
+                setFetchParams({type: "liar", modifier: autoScrolledCount.current});
+                return;
+
+            case SwipeDirection.RIGHT:
+                autoScrolledCount.current++;
+                setFetchParams({type: "rude", modifier: autoScrolledCount.current});
+                return;
+
+            case SwipeDirection.DOWN:
+                setFetchParams({modifier: autoScrolledCount.current});
+                return;
+        }
+    }
+
+    return (
+        <Suspense fallback={<LoadingFallback />} >
+            <div onTouchStart={onTouchStart} onTouchEnd={onTouchEnd} style={{ width: "100vw", height: "100%"}}>
+                <Main articleData={article} addToHistory={addToHistory} onSetAutoscroll={(val)=>{setAutoscroll(val)}} autoScroll={autoScroll} onSwipe={doSwipe}/>
+            </div>
+        </Suspense>
+    );
 }
 
 export default MainView;

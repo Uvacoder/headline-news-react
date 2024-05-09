@@ -1,51 +1,33 @@
 import { useState, useEffect } from "react";
-import stylex from "@stylexjs/stylex";
 
 import { Article } from "@/types/Article";
 import { FetchData } from "@/types/FetchData";
 
-import { Background } from "../styles/token.stylex";
 import Header from "./Header";
-import InstructionModal from "./InstructionModal";
-import DesktopNavButton from "./DesktopNavButton";
 import ArticlePreview from "./ArticlePreview";
-import { createSearchParams, useNavigate } from "react-router-dom";
 
 import axios, { AxiosResponse } from 'axios';
 import { BackgroundImage } from "@/types/Image";
 
-const styles = stylex.create({
-    mainContainer:{
-        backgroundRepeat: "no-repeat",
-        backgroundSize: "cover",
-        backgroundPosition: "center center",
-        height: "100dvh",
-        width: "100dvw",
-        display: "grid",
-        alignItems: "center",
-        justifyItems: "center",
-        gridTemplateRows:
-        { 
-            default: "min-content minmax(min-content, .1fr) auto minmax(min-content, .1fr)",
-            '@media (max-width: 761px)': "min-content 0 auto 0"
-        },
-        gridTemplateColumns:
-        { 
-            default: "minmax(min-content, .1fr) auto minmax(min-content, .1fr)",
-            '@media (max-width: 761px)': "0 auto 0"
-        },
-    },
-    content:{
-        gridColumnStart: "2",
-        height: "100%",
-        width: "100%" ,
-    },
-    rowFull: {
-        gridColumnStart: "1",
-        gridColumnEnd: "4",
-        width: "100%"
-    }
-});
+import UpArrow from "../assets/uparrow.svg";
+import DownArrow from "../assets/downarrow.svg";
+import LeftArrow from "../assets/leftarrow.svg";
+import RightArrow from "../assets/rightarrow.svg";
+import "./Main.css"
+import { createSearchParams, useNavigate } from "react-router-dom";
+
+export enum SwipeDirection
+{
+    LEFT = "left",
+    LEFT_UP = "left up",
+    UP = "up",
+    RIGHT_UP = "right up",
+    RIGHT = "right",
+    RIGHT_DOWN = "right down",
+    DOWN = "down",
+    LEFT_DOWN = "left down",
+    UNKNOWN = "error"
+}
 
 interface Props
 {
@@ -53,16 +35,13 @@ interface Props
     onSetAutoscroll: (scroll:boolean) => void,
     autoScroll: boolean,
     addToHistory: (id:number) => void,
-    onInstructionsViewed: ()=> void,
-    viewInstructions:boolean
+    onSwipe: (dir:SwipeDirection) => void
 }
 
-function Main({articleData, autoScroll, onSetAutoscroll, addToHistory, onInstructionsViewed, viewInstructions}:Props)
+function Main({articleData, autoScroll, onSetAutoscroll, addToHistory, onSwipe}:Props)
 {
     const navigation = useNavigate();
     const [audioOn, setAudioOn] = useState<Boolean>(true);
-
-    
     const [backgroundImage, setBackgroundImage] = useState("");
 
     useEffect(() => {
@@ -74,7 +53,7 @@ function Main({articleData, autoScroll, onSetAutoscroll, addToHistory, onInstruc
     const article:Article = articleData.read();
     if(article === null) 
     {
-        throw Error("Null article detected!");
+        location.href = "/view";
     }
 
     addToHistory(article.id);
@@ -84,37 +63,29 @@ function Main({articleData, autoScroll, onSetAutoscroll, addToHistory, onInstruc
         setAudioOn(on);
     }
 
-    const onCloseInstructions = ()=>
+    const goToDetail = ()=>
     {
-        onInstructionsViewed();
+        navigation({pathname: "/details", search: createSearchParams({id: article.id.toString()}).toString()});
     }
 
-    const onClick = ()=>
-    {
-        if(viewInstructions == false)
-        {
-            navigation({pathname: "/details", search: createSearchParams({id: article.id.toString()}).toString()});
-        }
-    }
-
-
-    return(<div {...stylex.props(styles.mainContainer)} style={{ backgroundImage }}>
-            <div {...stylex.props(styles.rowFull)}>
-                    <Header toggleAudio={onSetAudio} audio={audioOn} toggleAutoScroll={onSetAutoscroll} autoScroll={autoScroll} article={article}/>
-                {viewInstructions? <InstructionModal onClose={onCloseInstructions} /> : null }
+    return (
+        <div className="main" style={{ backgroundImage }} >
+            <Header toggleAudio={onSetAudio} audio={audioOn} toggleAutoScroll={onSetAutoscroll} autoScroll={autoScroll} article={article}/>
+            <div className="arrow-box">
+                <img src={UpArrow} onClick={() => {onSwipe(SwipeDirection.UP)} }/>
             </div>
-            <div {...stylex.props(styles.rowFull)}>
-                <DesktopNavButton />
+            <div className="arrow-box content">
+                <img src={LeftArrow} onClick={() => onSwipe(SwipeDirection.LEFT)}/>
+                <div onClick={goToDetail}>
+                    <ArticlePreview article={article} />
+                </div>
+                <img src={RightArrow} onClick={() => onSwipe(SwipeDirection.RIGHT)}/>
             </div>
-            <DesktopNavButton />
-            <div {...stylex.props(styles.content)}  onClick={onClick}>
-                    <ArticlePreview article={article}/>
+            <div className="arrow-box">
+                <img src={DownArrow} onClick={() => onSwipe(SwipeDirection.DOWN)}/>
             </div>
-            <DesktopNavButton />
-            <div {...stylex.props(styles.rowFull)}>
-                <DesktopNavButton />
-            </div>
-        </div>);
+        </div>
+    );
 }
 
 export default Main;

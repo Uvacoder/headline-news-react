@@ -10,11 +10,9 @@ import ArticleSource from "./ArticleSource";
 
 const styles = stylex.create({
     header:{
-        display: "grid",
-        width: "100%",
-        gridTemplateColumns: "min-content min-content auto",
-        columnGap: "1.25em",
-        margin: ".5em"
+        display: "flex",
+        columnGap: "1.5em",
+        padding: "0.5em"
     }
 });
 
@@ -35,16 +33,15 @@ function Header({toggleAudio ,audio, toggleAutoScroll, autoScroll, article}:Prop
         axios.get(`api/getImage.php?type=gif/${article.category}`).then(
             (res: AxiosResponse<BackgroundImage>) => setBackgroundImage(`${axios.defaults.baseURL}${res.data.url}`)
         );
-        console.log(article.category);
     }, [article])
 
     return(
         <div {...stylex.props(styles.header)}>
             <Menu toggleAudio={toggleAudio} audio={audio} toggleAutoScroll={toggleAutoScroll} autoScroll={autoScroll} />
-            <img src={backgroundImage} style={{width: "54px", height:"54px", border: "2px solid white"}}/>
+            <img src={backgroundImage} style={{width: "58px", height:"58px", border: "2px solid white"}}/>
             <Suspense>
                 <ArticleSource article={article} />
-            </Suspense>            
+            </Suspense>      
         </div>);
 }
 

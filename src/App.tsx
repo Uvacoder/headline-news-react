@@ -12,19 +12,12 @@ import { useState } from "react";
 
 function App() 
 {
-  const [viewInstructions, setViewInstructions] = useState(true);
-
-  const onInstructionsViewed = ()=>
-  {
-    setViewInstructions(false);
-  }
-
   return (
     <Router>
         <Routes>
           <Route path="/" element={<LandingView />} />
           <Route path="/instruction" element={<InstructionView />} />
-          <Route path="/view" element={<MainView viewInstructions={viewInstructions} onInstructionsViewed={onInstructionsViewed} />}  />
+          <Route path="/view" element={<MainView />}  />
           <Route path="/details" element={<DetailedView />} />
           <Route path="/admin" element={<Admin />} />
         </Routes>

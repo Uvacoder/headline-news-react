@@ -8,7 +8,7 @@ const styles = stylex.create({
     {
         border: "2px solid black",
         borderRadius: "10px",
-        padding: ".5em",
+        padding: ".4em",
         overflow: "hidden",
         display: "flex",
         justifyContent: "center",

@@ -61,7 +61,7 @@ function LandingView()
         </div>
         {/* <MobileNavHint><IconArrowBigLeft>Swipe Left for Loser and Lies</IconArrowBigLeft></MobileNavHint> */}
         <div {...stylex.props(styles.content)}>
-            <h2 style={{color: "black"}}>Welcome to Trump Headshakers</h2>
+            <h2 style={{color: "black", textShadow: "2px 2px 4px white"}}>Welcome to Trump Headshakers</h2>
             <p>This is a scrollable collection of thousands of lies, mean comments, misinformation, and bizarre behavior by one Donald Trump and his enablers.</p>
             <p>Every post is supported by its source. Email for any suggestions, additions, or corrections.</p>
             <p>Click to Enter</p>
