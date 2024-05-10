@@ -13,8 +13,10 @@ import UpArrow from "../assets/uparrow.svg";
 import DownArrow from "../assets/downarrow.svg";
 import LeftArrow from "../assets/leftarrow.svg";
 import RightArrow from "../assets/rightarrow.svg";
-import "./Main.css"
 import { createSearchParams, useNavigate } from "react-router-dom";
+import { GlobalHotKeys } from "react-hotkeys";
+
+import "./Main.css"
 
 export enum SwipeDirection
 {
@@ -28,6 +30,13 @@ export enum SwipeDirection
     LEFT_DOWN = "left down",
     UNKNOWN = "error"
 }
+
+const keyMap = {
+    [SwipeDirection.LEFT]: "ArrowLeft",
+    [SwipeDirection.RIGHT]: "ArrowRight",
+    [SwipeDirection.DOWN]: "ArrowDown",
+    [SwipeDirection.UP]: "ArrowUp"
+};
 
 interface Props
 {
@@ -70,23 +79,32 @@ function Main({articleData, autoScroll, onSetAutoscroll, addToHistory, onSwipe}:
         navigation({pathname: "/details", search: createSearchParams({id: article.id.toString()}).toString()});
     }
 
+    const keyHandler = {
+        [SwipeDirection.LEFT]: () => onSwipe(SwipeDirection.LEFT),
+        [SwipeDirection.RIGHT]: () => onSwipe(SwipeDirection.RIGHT),
+        [SwipeDirection.DOWN]: () => onSwipe(SwipeDirection.DOWN),
+        [SwipeDirection.UP]: () => onSwipe(SwipeDirection.UP),
+    };
+
     return (
-        <div className="main" style={{ backgroundImage }} >
-            <Header toggleAudio={onSetAudio} audio={audioOn} toggleAutoScroll={onSetAutoscroll} autoScroll={autoScroll} article={article}/>
-            <div className="arrow-box">
-                <img src={UpArrow} onClick={() => {onSwipe(SwipeDirection.UP)} }/>
-            </div>
-            <div className="arrow-box content">
-                <img src={LeftArrow} onClick={() => onSwipe(SwipeDirection.LEFT)}/>
-                <div onClick={goToDetail}>
-                    <ArticlePreview article={article} />
+        <GlobalHotKeys handlers={keyHandler} keyMap={keyMap} allowChanges={true}>
+            <div className="main" style={{ backgroundImage }} >
+                <Header toggleAudio={onSetAudio} audio={audioOn} toggleAutoScroll={onSetAutoscroll} autoScroll={autoScroll} article={article}/>
+                <div className="arrow-box">
+                    <img src={UpArrow} onClick={() => {onSwipe(SwipeDirection.UP)} }/>
                 </div>
-                <img src={RightArrow} onClick={() => onSwipe(SwipeDirection.RIGHT)}/>
+                <div className="arrow-box content">
+                    <img src={LeftArrow} onClick={() => onSwipe(SwipeDirection.LEFT)}/>
+                    <div onClick={goToDetail}>
+                        <ArticlePreview article={article} />
+                    </div>
+                    <img src={RightArrow} onClick={() => onSwipe(SwipeDirection.RIGHT)}/>
+                </div>
+                <div className="arrow-box">
+                    <img src={DownArrow} onClick={() => onSwipe(SwipeDirection.DOWN)}/>
+                </div>
             </div>
-            <div className="arrow-box">
-                <img src={DownArrow} onClick={() => onSwipe(SwipeDirection.DOWN)}/>
-            </div>
-        </div>
+        </GlobalHotKeys>
     );
 }
 
