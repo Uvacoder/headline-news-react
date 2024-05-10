@@ -48,6 +48,7 @@ function InstructionView()
         axios.get("api/getImage.php?type=intro").then(
             (res: AxiosResponse<BackgroundImage>) => setBackgroundImage(`url('${axios.defaults.baseURL}${res.data.url}')`)
         );
+        localStorage.setItem("visited", "true");
     }, [])
 
     const onToMainView = ()=>

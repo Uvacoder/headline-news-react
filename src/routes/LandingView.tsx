@@ -51,7 +51,10 @@ function LandingView()
 
     const onNextView = ()=>
     {
-        navigator("/instruction");
+        if(localStorage.getItem("visited") === "true")
+            navigator("/view");
+        else
+            navigator("/instruction");
     }
 
     return(<div {...stylex.props(styles.mainContainer)} style={{backgroundImage}} onClick={onNextView}>
