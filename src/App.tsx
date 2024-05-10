@@ -1,6 +1,6 @@
 
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
-import { useRef } from "react";
+import { useRef, useState } from "react";
 
 import MainView from "@/routes/MainView";
 import DetailedView from "@/routes/DetailedView";
@@ -13,6 +13,7 @@ import Admin from "./routes/Admin";
 function App() 
 {
   const articleHistory = useRef<number[]>([]);
+  const [autoScroll, setAutoscroll] = useState<boolean>(true);
 
   const addToHistory = (id:number) => {
     if(articleHistory.current.length == 0)
@@ -41,7 +42,7 @@ function App()
         <Routes>
           <Route path="/" element={<LandingView />} />
           <Route path="/instruction" element={<InstructionView />} />
-          <Route path="/view" element={<MainView addToHistory={addToHistory} popFromHistory={popFromHistory} />}  />
+          <Route path="/view" element={<MainView addToHistory={addToHistory} popFromHistory={popFromHistory} autoScroll={autoScroll} setAutoscroll={setAutoscroll} />}  />
           <Route path="/details" element={<DetailedView />} />
           <Route path="/admin" element={<Admin />} />
         </Routes>

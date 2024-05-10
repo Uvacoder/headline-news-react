@@ -14,12 +14,13 @@ interface TouchPoint
 interface Props
 {
     addToHistory: (id:number) => void,
-    popFromHistory: () => number
+    popFromHistory: () => number,
+    autoScroll: boolean,
+    setAutoscroll: (id:boolean) => void
 }
 
-function MainView({ addToHistory, popFromHistory } : Props)
+function MainView({ addToHistory, popFromHistory, autoScroll, setAutoscroll } : Props)
 {
-    const [autoScroll, setAutoscroll] = useState<boolean>(true);
     const [fetchParams, setFetchParams] = useState<ArticleFetchParams>({latest: true});
     const article = useFetchApi<Article>("api/article.php", fetchParams);
     

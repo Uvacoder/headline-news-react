@@ -19,7 +19,7 @@ const styles = stylex.create({
         display: "grid",
         alignItems: "center",
         justifyItems: "center",
-        gridTemplateRows: "minmax(min-content, .1fr) auto minmax(min-content, .1fr)",
+        gridTemplateRows: "minmax(min-content, .1fr) minmax(min-content, .8fr) minmax(min-content, .1fr)",
         gridTemplateColumns: ".1fr .8fr .1fr"
      },
     content: {
@@ -30,8 +30,8 @@ const styles = stylex.create({
         width: "100%",
         alignItems: "center",
         justifyItems: "center",
-        rowGap: "0.5rem",
         textAlign: "center",
+        rowGap: "0",
         fontSize: "1.5em",
         marginTop: "1.5em",
         color: "white",
@@ -58,15 +58,15 @@ function InstructionView()
 
     return (<div {...stylex.props(styles.mainContainer)} style={{backgroundImage}} onClick={onToMainView}>
         <div {...stylex.props(styles.content)}>
-            <img src={UpArrow} width={"100px"}/>
+            <img src={UpArrow} width={"64px"}/>
             <p>Explore all the reasons why Donald Trump and his allies are the wrong choice for the USA and for you in 2024</p>
             <div style={{ display: "flex", justifyContent: "space-between", width: "100%" }}>
-                <img src={LeftArrow} width={"100px"}/>
-                <img src={RightArrow} width={"100px"}/>
+                <img src={LeftArrow} width={"64px"}/>
+                <img src={RightArrow} width={"64px"}/>
             </div>
             
             <p>Support a better candidate for 2024 and ask your politicians to get back to work</p>
-            <img src={DownArrow} width={"100px"}/>
+            <img src={DownArrow} width={"64px"}/>
             <p>Click to Continue</p>
         </div>
     </div>);

@@ -26,7 +26,6 @@ const styles = stylex.create({
         alignItems: "center",
         justifyItems: "center",
         gridTemplateRows: ".4fr .4fr .2fr",
-        rowGap: "2rem",
         textAlign: "center",
         fontSize: "1.5em",
         color: "white",
