@@ -72,18 +72,21 @@ function ArticleView({articleData}:Props)
     const header = getHeader();
 
     return(
-        <div {...stylex.props(styles.mainContainer)} style={{backgroundImage}}>
+        <div onClick={onClick} {...stylex.props(styles.mainContainer)} style={{backgroundImage}}>
             <div {...stylex.props(styles.container)} >
-                <div {...stylex.props(styles.button)} onClick={onClick}>
+                <div {...stylex.props(styles.button)}>
                     <img src={GoBack} /> Go Back
                 </div>
                 <TextSection backgroundColor="#40404040">{header}</TextSection>
                 {article.source != ""? <TextSection backgroundColor="#f0f0f060">{article.shortHeadline}</TextSection> : null }
                 <TextSection backgroundColor="#f0f0f060">{article.completeArticle}</TextSection>
                 {article.rebuttal != ""? <TextSection backgroundColor="#80f08060">{article.rebuttal}</TextSection>  : null}
+                <div {...stylex.props(styles.button)} style={{ justifyContent: "flex-end"}}>
+                    <img src={GoBack} /> Go Back
+                </div>
             </div>
         </div>
-            );    
+    );    
 }
 
 export default ArticleView;

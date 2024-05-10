@@ -24,8 +24,7 @@ function MainView()
     const articleHistory = useRef<number[]>([]);
     const startPoint = useRef<TouchPoint | null>(null);
 
-    useEffect(()=>{
-
+    const setupTimer = () => {
         if(autoScroll)
         {
             if(timerRef.current !== null || timerRef.current !== undefined)
@@ -43,8 +42,9 @@ function MainView()
         {
             clearInterval(timerRef.current);
         }
+    };
 
-    },[autoScroll]);
+    useEffect(setupTimer, [autoScroll]);
 
     const onTouchStart = (param:TouchEvent<HTMLDivElement>)=>
     {
@@ -117,6 +117,7 @@ function MainView()
         switch(dir)
         {
             case SwipeDirection.UP:
+                setupTimer();
                 if(articleHistory.current.length >= 2)
                 {
                     articleHistory.current.pop();
@@ -125,16 +126,19 @@ function MainView()
                 }
                 return;            
             case SwipeDirection.LEFT:
+                setupTimer();
                 autoScrolledCount.current++;
                 setFetchParams({type: "liar", modifier: autoScrolledCount.current});
                 return;
 
             case SwipeDirection.RIGHT:
+                setupTimer();
                 autoScrolledCount.current++;
                 setFetchParams({type: "rude", modifier: autoScrolledCount.current});
                 return;
 
             case SwipeDirection.DOWN:
+                setupTimer();
                 setFetchParams({modifier: autoScrolledCount.current});
                 return;
         }
