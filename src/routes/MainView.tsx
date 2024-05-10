@@ -11,9 +11,13 @@ interface TouchPoint
     y:number
 }
 
+interface Props
+{
+    addToHistory: (id:number) => void,
+    popFromHistory: () => number
+}
 
-
-function MainView()
+function MainView({ addToHistory, popFromHistory } : Props)
 {
     const [autoScroll, setAutoscroll] = useState<boolean>(true);
     const [fetchParams, setFetchParams] = useState<ArticleFetchParams>({latest: true});
@@ -21,7 +25,6 @@ function MainView()
     
     const timerRef = useRef<number>();
     const autoScrolledCount = useRef<number>(0);
-    const articleHistory = useRef<number[]>([]);
     const startPoint = useRef<TouchPoint | null>(null);
 
     const setupTimer = () => {
@@ -36,7 +39,6 @@ function MainView()
                 autoScrolledCount.current++;
                 setFetchParams({modifier: autoScrolledCount.current});
             }, 9000, article);
-            
         }
         else
         {
@@ -96,32 +98,16 @@ function MainView()
         }
     }
 
-    const addToHistory = (id:number) =>
-    {
-        if(articleHistory.current.length == 0)
-        {
-            articleHistory.current.push(id);
-        }
-
-        if(articleHistory.current[articleHistory.current.length-1] != id)
-        {
-            articleHistory.current.push(id);
-            if(articleHistory.current.length >= 10)
-            {
-                articleHistory.current = articleHistory.current.slice(1,10);
-            }
-        }
-    }
+    
 
     const doSwipe = (dir: SwipeDirection) => {
         switch(dir)
         {
             case SwipeDirection.UP:
                 setupTimer();
-                if(articleHistory.current.length >= 2)
+                const lastViewed = popFromHistory();
+                if(lastViewed)
                 {
-                    articleHistory.current.pop();
-                    const lastViewed = articleHistory.current.pop();
                     setFetchParams({articleid: lastViewed });
                 }
                 return;            
