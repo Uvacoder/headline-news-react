@@ -43,7 +43,7 @@ function LandingView()
     const [backgroundImage, setBackgroundImage] = useState("");
 
     useEffect(() => {
-        axios.get("api/getImage.php?type=intro").then(
+        axios.get("api/getImage.php?type=welcome").then(
             (res: AxiosResponse<BackgroundImage>) => setBackgroundImage(`url('${axios.defaults.baseURL}${res.data.url}')`)
         );
     }, [])

@@ -45,7 +45,7 @@ function InstructionView()
     const [backgroundImage, setBackgroundImage] = useState("");
 
     useEffect(() => {
-        axios.get("api/getImage.php?type=intro").then(
+        axios.get("api/getImage.php?type=instruction").then(
             (res: AxiosResponse<BackgroundImage>) => setBackgroundImage(`url('${axios.defaults.baseURL}${res.data.url}')`)
         );
         localStorage.setItem("visited", "true");

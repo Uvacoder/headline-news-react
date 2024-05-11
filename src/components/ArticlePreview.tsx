@@ -31,12 +31,12 @@ interface Props
 
 function ArticlePreview({article}:Props)
 {
-    const containerStyle = article.rebuttal? styles.container : styles.rebuttalessContainer;
+    const containerStyle = article.rebuttal && article.summary ? styles.container : styles.rebuttalessContainer;
     return(        
         <div {...stylex.props(containerStyle)}>
             <TextSection backgroundColor="#40404040" lines={2}>{article.shortHeadline}</TextSection>
-            <TextSection backgroundColor="#f0f0f060" lines={article.rebuttal ? 4 : 7}>{article.summary}</TextSection>
-            {article.rebuttal? <TextSection backgroundColor="#80f08060" lines={4}>{article.rebuttal}</TextSection>: null}
+            {article.summary ? <TextSection backgroundColor="#f0f0f060" lines={article.rebuttal ? 4 : 7}>{article.summary}</TextSection> : null}
+            {article.rebuttal ? <TextSection backgroundColor="#80f08060" lines={article.summary ? 4 : 7}>{article.rebuttal}</TextSection>: null}
         </div>
     );
 }

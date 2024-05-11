@@ -88,20 +88,20 @@ function Main({articleData, autoScroll, onSetAutoscroll, addToHistory, onSwipe}:
 
     return (
         <GlobalHotKeys handlers={keyHandler} keyMap={keyMap} allowChanges={true}>
-            <div className="main" style={{ backgroundImage }} >
+            <div className="main" style={{ backgroundImage }} onClick={goToDetail} >
                 <Header toggleAudio={onSetAudio} audio={audioOn} toggleAutoScroll={onSetAutoscroll} autoScroll={autoScroll} article={article}/>
                 <div className="arrow-box">
-                    <img src={UpArrow} onClick={() => {onSwipe(SwipeDirection.UP)} }/>
+                    <img src={UpArrow} onClick={e => { onSwipe(SwipeDirection.UP); e.stopPropagation(); } }/>
                 </div>
                 <div className="arrow-box content">
-                    <img src={LeftArrow} onClick={() => onSwipe(SwipeDirection.LEFT)}/>
-                    <div onClick={goToDetail}>
+                    <img src={LeftArrow} onClick={e => { onSwipe(SwipeDirection.LEFT); e.stopPropagation(); }}/>
+                    <div>
                         <ArticlePreview article={article} />
                     </div>
-                    <img src={RightArrow} onClick={() => onSwipe(SwipeDirection.RIGHT)}/>
+                    <img src={RightArrow} onClick={e => { onSwipe(SwipeDirection.RIGHT); e.stopPropagation(); }}/>
                 </div>
                 <div className="arrow-box">
-                    <img src={DownArrow} onClick={() => onSwipe(SwipeDirection.DOWN)}/>
+                    <img src={DownArrow} onClick={e => { onSwipe(SwipeDirection.DOWN); e.stopPropagation(); }}/>
                 </div>
             </div>
         </GlobalHotKeys>

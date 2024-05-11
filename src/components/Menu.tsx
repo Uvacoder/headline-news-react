@@ -55,9 +55,9 @@ function Menu({toggleAudio, audio, toggleAutoScroll, autoScroll}:Props)
     const [showMenu, setShowMenu] = useState<Boolean>(false);
     const [whoppers, setWhoppers] = useState<Whopper[]>([]);
 
-    const onShowMenu = ()=>
+    const onShowMenu = () =>
     {
-        setShowMenu(prev => !prev);
+        setShowMenu(prev => !prev);       
     }
 
     useEffect(() => {
@@ -69,7 +69,7 @@ function Menu({toggleAudio, audio, toggleAutoScroll, autoScroll}:Props)
     }, [showMenu]);
 
     return(
-        <>
+        <div onClick={e => e.stopPropagation()}>
             <div {...stylex.props(styles.menuButton)} onClick={onShowMenu}>
                 <IconMenu2 size={"2.5rem"} />
             </div>
@@ -93,7 +93,7 @@ function Menu({toggleAudio, audio, toggleAutoScroll, autoScroll}:Props)
                 </div>
             </div>
             : null }
-        </>
+        </div>
     )
 }
 
