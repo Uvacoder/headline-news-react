@@ -109,7 +109,7 @@ function Menu({toggleAudio, audio, toggleAutoScroll, autoScroll, article}:Props)
     
     const goToDetail = (id:number) =>
     {
-        navigation({pathname: "/details", search: createSearchParams({id}).toString()});
+        navigation({pathname: "/details", search: createSearchParams({id: id.toString()}).toString()});
     }
 
     return(

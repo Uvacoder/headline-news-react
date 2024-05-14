@@ -48,7 +48,7 @@ function AboutUs()
       axios.get("api/getImage.php?type=temp").then(
         (res: AxiosResponse<BackgroundImage>) => setBackgroundImage(`url('${axios.defaults.baseURL}${res.data.url}')`)
       );
-      axios.get("api/getContent.php?type=about").then(
+      axios.get("api/getContent.php?type=contact").then(
         (res: AxiosResponse<Content>) => setContent(res.data.text)
       )
   }, [])
@@ -58,7 +58,7 @@ function AboutUs()
       <div {...stylex.props(styles.button)}>
         <img src={GoBack} /> Go Back
       </div>
-      <h1 {...stylex.props(styles.center)}>About Us</h1>
+      <h1 {...stylex.props(styles.center)}>Contact Us</h1>
       <div {...stylex.props(styles.content)}>{ content }</div>
     </div>
   );

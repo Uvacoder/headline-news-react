@@ -10,6 +10,7 @@ import LandingView from "./routes/LandingView";
 import InstructionView from "./routes/InstructionView";
 import Admin from "./routes/Admin";
 import AboutUs from "./routes/AboutUs";
+import ContactUs from "./routes/ContactUs";
 
 function App() 
 {
@@ -47,6 +48,7 @@ function App()
           <Route path="/details" element={<DetailedView />} />
           <Route path="/admin" element={<Admin />} />
           <Route path="/about" element={<AboutUs />} />
+          <Route path="/contact" element={<ContactUs />} />
           
         </Routes>
     </Router>
