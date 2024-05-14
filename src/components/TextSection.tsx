@@ -1,6 +1,5 @@
 import stylex from "@stylexjs/stylex";
 import { ReactNode } from "react";
-import "../components/Link.css";
 
 const styles = stylex.create({
     container: {

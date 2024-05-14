@@ -37,7 +37,7 @@ function Header({toggleAudio ,audio, toggleAutoScroll, autoScroll, article}:Prop
 
     return(
         <div {...stylex.props(styles.header)}>
-            <Menu toggleAudio={toggleAudio} audio={audio} toggleAutoScroll={toggleAutoScroll} autoScroll={autoScroll} />
+            <Menu toggleAudio={toggleAudio} audio={audio} toggleAutoScroll={toggleAutoScroll} autoScroll={autoScroll} article={article} />
             <img src={backgroundImage} style={{width: "58px", height:"58px", border: "2px solid white"}}/>
             <Suspense>
                 <ArticleSource article={article} />

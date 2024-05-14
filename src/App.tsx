@@ -9,6 +9,7 @@ import "./App.css"
 import LandingView from "./routes/LandingView";
 import InstructionView from "./routes/InstructionView";
 import Admin from "./routes/Admin";
+import AboutUs from "./routes/AboutUs";
 
 function App() 
 {
@@ -45,6 +46,8 @@ function App()
           <Route path="/view" element={<MainView addToHistory={addToHistory} popFromHistory={popFromHistory} autoScroll={autoScroll} setAutoscroll={setAutoscroll} />}  />
           <Route path="/details" element={<DetailedView />} />
           <Route path="/admin" element={<Admin />} />
+          <Route path="/about" element={<AboutUs />} />
+          
         </Routes>
     </Router>
   )
