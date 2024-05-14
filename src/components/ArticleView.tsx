@@ -17,11 +17,23 @@ const styles = stylex.create({
         width: "100dvw",
         overflow: "auto"
     },
+    overlay: {
+        position: "absolute",
+        top: "0",
+        left: "0",
+        right: "0",
+        bottom: "0",
+        backgroundColor: "black",
+        opacity: "0.6",
+        zIndex: "1"
+    },
     container: {
+        position: "relative",
         display: "flex",
         flexDirection: "column",
         gap: "1em",
         margin: "1em",
+        zIndex: "2",
     },
     button: {
         display: "flex",
@@ -73,13 +85,14 @@ function ArticleView({articleData}:Props)
 
     return(
         <div onClick={onClick} {...stylex.props(styles.mainContainer)} style={{backgroundImage}}>
+            <div {...stylex.props(styles.overlay)}></div>
             <div {...stylex.props(styles.container)} >
                 <div {...stylex.props(styles.button)}>
                     <img src={GoBack} /> Go Back
                 </div>
                 <TextSection backgroundColor="#40404040">{header}</TextSection>
                 {article.source != ""? <TextSection backgroundColor="#f0f0f060">{article.shortHeadline}</TextSection> : null }
-                <TextSection backgroundColor="#f0f0f060">{article.completeArticle}</TextSection>
+                {article.completeArticle != "" ? <TextSection backgroundColor="#f0f0f060">{article.completeArticle}</TextSection> : null }
                 {article.rebuttal != ""? <TextSection backgroundColor="#80f08060">{article.rebuttal}</TextSection>  : null}
                 <div {...stylex.props(styles.button)} style={{ justifyContent: "flex-end"}}>
                     <img src={GoBack} /> Go Back

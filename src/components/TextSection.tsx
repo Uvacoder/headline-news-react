@@ -1,7 +1,26 @@
 import stylex from "@stylexjs/stylex";
 import { ReactNode } from "react";
+import "../components/Link.css";
 
 const styles = stylex.create({
+    container: {
+        position: "relative",
+        alignItems: "center",
+        textShadow: "2px 2px 4px black",
+        color: "white",
+        height: "100%",
+        width: "100%",
+    },
+    heading: {
+        position: "absolute",
+        top: "50%",
+        left: "0",
+        fontSize: "1.2em",
+        whiteSpace: "nowrap",
+        transform: "rotate(-90deg)",
+        transformOrigin: "top left",
+        translate: "0 150%"
+    },
     TextSection:
     {
         border: "2px solid black",
@@ -11,10 +30,9 @@ const styles = stylex.create({
         display: "flex",
         justifyContent: "center",
         alignItems: "center",
-        minHeight: "40px"
+        height: "100%",
     },
     text:{
-        color: "white",
         textAlign: "center",
         fontSize: "1.25em",
         
@@ -24,7 +42,6 @@ const styles = stylex.create({
         display: "-webkit-box",
         WebkitBoxOrient: "vertical",
         overflow: "hidden",
-        textShadow: "2px 2px 4px black",
     },
 });
 
@@ -32,15 +49,20 @@ interface Props
 {
     children:ReactNode,
     backgroundColor:string,
-    lines?:number
+    lines?:number,
+    heading?:string
 }
 
-function TextSection({children, backgroundColor, lines}: Props)
+function TextSection({children, backgroundColor, lines, heading}: Props)
 {
     return(
-        <div {...stylex.props(styles.TextSection)} style={{ backgroundColor }}>
-            <div {...stylex.props(styles.text)} style={ lines ? { WebkitLineClamp: lines } : {} }>{children}</div>
+        <div { ...stylex.props(styles.container)}>
+            {heading ? <div { ...stylex.props(styles.heading)}>{ heading }</div> : null}
+            <div {...stylex.props(styles.TextSection)} style={{ backgroundColor, marginLeft: (heading ? "2em" : "0") }}>
+                <div {...stylex.props(styles.text)} style={ lines ? { WebkitLineClamp: lines } : {} }>{children}</div>
+            </div>
         </div>
+        
     )
 }
 
