@@ -67,7 +67,7 @@ function InstructionView()
             
             <p>Support a better candidate for 2024 and ask your politicians to get back to work</p>
             <img src={DownArrow} width={"64px"}/>
-            <p>Click to Continue</p>
+            <h5>Click to Continue</h5>
         </div>
     </div>);
 }
