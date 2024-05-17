@@ -5,14 +5,10 @@ import { BackgroundImage } from "@/types/Image";
 import stylex from "@stylexjs/stylex";
 import GoBack from "../assets/goback.svg";
 import { Content } from "@/types/Content";
+import ImageContainer from "@/components/ImageContainer";
 
 const styles = stylex.create({
   mainContainer: {
-    backgroundRepeat: "no-repeat",
-    backgroundSize: "cover",
-    backgroundPosition: "center center",
-    height: "100dvh",
-    width: "100dvw",
     color: "white",
     textShadow: "2px 2px 4px black",
     display: "flex",
@@ -46,7 +42,7 @@ function AboutUs()
 
   useEffect(() => {
       axios.get("api/getImage.php?type=temp").then(
-        (res: AxiosResponse<BackgroundImage>) => setBackgroundImage(`url('${axios.defaults.baseURL}${res.data.url}')`)
+        (res: AxiosResponse<BackgroundImage>) => setBackgroundImage(`${axios.defaults.baseURL}${res.data.url}`)
       );
       axios.get("api/getContent.php?type=about").then(
         (res: AxiosResponse<Content>) => setContent(res.data.text)
@@ -54,13 +50,13 @@ function AboutUs()
   }, [])
 
   return (
-    <div {...stylex.props(styles.mainContainer)} onClick={() => { navigation("/view"); }} style={{backgroundImage}}>    
+    <ImageContainer {...stylex.props(styles.mainContainer)} onClick={() => { navigation("/view"); }} backgroundImage={backgroundImage}>    
       <div {...stylex.props(styles.button)}>
         <img src={GoBack} /> Go Back
       </div>
       <h1 {...stylex.props(styles.center)}>About Us</h1>
       <div {...stylex.props(styles.content)}>{ content }</div>
-    </div>
+    </ImageContainer>
   );
 }
 

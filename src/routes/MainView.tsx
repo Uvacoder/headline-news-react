@@ -4,6 +4,7 @@ import useFetchApi from "@/hooks/useFetchApi";
 import ArticleFetchParams from "@/types/ArticleFetchParams";
 import Main, { SwipeDirection } from "@/components/Main";
 import LoadingFallback from "@/components/LoadingFallback";
+import { BackgroundImage } from "@/types/Image";
 
 interface TouchPoint
 {
@@ -23,6 +24,7 @@ function MainView({ addToHistory, popFromHistory, autoScroll, setAutoscroll } : 
 {
     const [fetchParams, setFetchParams] = useState<ArticleFetchParams>({latest: true});
     const article = useFetchApi<Article>("api/article.php", fetchParams);
+    const backgroundImage = useFetchApi<BackgroundImage>("api/getImage.php?type=main");
     
     const timerRef = useRef<number>();
     const autoScrolledCount = useRef<number>(0);
@@ -99,8 +101,6 @@ function MainView({ addToHistory, popFromHistory, autoScroll, setAutoscroll } : 
         }
     }
 
-    
-
     const doSwipe = (dir: SwipeDirection) => {
         switch(dir)
         {
@@ -134,7 +134,7 @@ function MainView({ addToHistory, popFromHistory, autoScroll, setAutoscroll } : 
     return (
         <Suspense fallback={<LoadingFallback />} >
             <div onTouchStart={onTouchStart} onTouchEnd={onTouchEnd} style={{ width: "100vw", height: "100%"}}>
-                <Main articleData={article} addToHistory={addToHistory} onSetAutoscroll={(val)=>{setAutoscroll(val)}} autoScroll={autoScroll} onSwipe={doSwipe} setupTimer={setupTimer}/>
+                <Main articleData={article} backgroundImageData={backgroundImage} addToHistory={addToHistory} onSetAutoscroll={(val)=>{setAutoscroll(val)}} autoScroll={autoScroll} onSwipe={doSwipe} setupTimer={setupTimer}/>
             </div>
         </Suspense>
     );

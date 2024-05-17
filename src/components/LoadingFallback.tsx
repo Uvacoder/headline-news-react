@@ -19,7 +19,8 @@ const styles = stylex.create({
         height: "100%",
         display: "flex",
         alignItems: "center",
-        justifyContent: "center"
+        justifyContent: "center",
+        zIndex: "100"
     },
     rotate:{
         animationName: rotate,

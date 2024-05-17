@@ -4,14 +4,10 @@ import axios, { AxiosResponse } from 'axios';
 import { useNavigate } from "react-router-dom";
 import { BackgroundImage } from "@/types/Image";
 import { useEffect, useState } from "react";
+import ImageContainer from "@/components/ImageContainer";
 
 const styles = stylex.create({
     mainContainer:{
-        backgroundRepeat: "no-repeat",
-        backgroundSize: "cover",
-        backgroundPosition: "center center",
-        height: "100dvh",
-        width: "100dvw",
         display: "grid",
         alignItems: "center",
         justifyItems: "center",
@@ -44,7 +40,7 @@ function LandingView()
 
     useEffect(() => {
         axios.get("api/getImage.php?type=welcome").then(
-            (res: AxiosResponse<BackgroundImage>) => setBackgroundImage(`url('${axios.defaults.baseURL}${res.data.url}')`)
+            (res: AxiosResponse<BackgroundImage>) => setBackgroundImage(`${axios.defaults.baseURL}${res.data.url}`)
         );
     }, [])
 
@@ -56,7 +52,7 @@ function LandingView()
             navigator("/instruction");
     }
 
-    return(<div {...stylex.props(styles.mainContainer)} style={{backgroundImage}} onClick={onNextView}>
+    return(<ImageContainer {...stylex.props(styles.mainContainer)} backgroundImage={backgroundImage} onClick={onNextView}>
         <div {...stylex.props(styles.rowFull)}>
             {/* <MobileNavHint><IconArrowBigUp>Swipe Up for Next Headline</IconArrowBigUp></MobileNavHint> */}
         </div>
@@ -71,7 +67,7 @@ function LandingView()
         <div {...stylex.props(styles.rowFull)}>
         {/* <MobileNavHint><IconArrowBigDown>Swipe down to go back</IconArrowBigDown></MobileNavHint> */}
         </div>
-    </div>);
+    </ImageContainer>);
 }
 
 export default LandingView;

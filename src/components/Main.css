@@ -1,13 +1,3 @@
-.main {
-  background-repeat: no-repeat;
-  background-size: cover;
-  background-position: center center;
-  width: 100vw;
-  height: 100vh;
-  display: flex;
-  flex-direction: column;
-}
-
 .arrow-box {
   display: flex;
   justify-content: center;

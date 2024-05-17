@@ -9,6 +9,7 @@ import { Whopper } from '../types/Whopper';
 import { BackgroundImage } from "@/types/Image";
 import { Article } from "@/types/Article";
 import { createSearchParams, useNavigate } from "react-router-dom";
+import ImageContainer from "./ImageContainer";
 
 const styles = stylex.create({
     menuButton: {
@@ -23,14 +24,9 @@ const styles = stylex.create({
     },
     menuContainer: {
         position: "absolute",
-        backgroundRepeat: "no-repeat",
-        backgroundSize: "cover",
-        backgroundPosition: "center center",
         top: "0",
         left: "0",
         zIndex: "1",
-        width: "100vw",
-        height: "100vh"
     },
     overlay: {
         position: "absolute",
@@ -96,7 +92,7 @@ function Menu({toggleAudio, audio, toggleAutoScroll, autoScroll, article, setupT
     
     useEffect(() => {
         axios.get("api/getImage.php?type=hamburger").then(
-            (res: AxiosResponse<BackgroundImage>) => setBackgroundImage(`url('${axios.defaults.baseURL}${res.data.url}')`)
+            (res: AxiosResponse<BackgroundImage>) => setBackgroundImage(`${axios.defaults.baseURL}${res.data.url}`)
         );
     }, [])
 
@@ -123,7 +119,7 @@ function Menu({toggleAudio, audio, toggleAutoScroll, autoScroll, article, setupT
                 <IconMenu2 size={"2.5rem"} />
             </div>
             {showMenu ? 
-            <div {...stylex.props(styles.menuContainer)} style={{backgroundImage}} onTouchStart={blockTouch} onTouchEnd={blockTouch}>
+            <ImageContainer {...stylex.props(styles.menuContainer)} backgroundImage={backgroundImage} onTouchStart={blockTouch} onTouchEnd={blockTouch}>
                 <div {...stylex.props(styles.overlay)}></div>
                 <div {...stylex.props(styles.content)}>
                     <div {...stylex.props(styles.control)}>
@@ -148,7 +144,7 @@ function Menu({toggleAudio, audio, toggleAutoScroll, autoScroll, article, setupT
                         }
                     </div>
                 </div>
-            </div>
+            </ImageContainer>
             : null }
         </div>
     )

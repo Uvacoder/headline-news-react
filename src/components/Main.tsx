@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState } from "react";
 
 import { Article } from "@/types/Article";
 import { FetchData } from "@/types/FetchData";
@@ -6,7 +6,7 @@ import { FetchData } from "@/types/FetchData";
 import Header from "./Header";
 import ArticlePreview from "./ArticlePreview";
 
-import axios, { AxiosResponse } from 'axios';
+import axios from 'axios';
 import { BackgroundImage } from "@/types/Image";
 
 import UpArrow from "../assets/uparrow.svg";
@@ -17,6 +17,7 @@ import { createSearchParams, useNavigate } from "react-router-dom";
 import { GlobalHotKeys } from "react-hotkeys";
 
 import "./Main.css"
+import ImageContainer from "./ImageContainer";
 
 export enum SwipeDirection
 {
@@ -45,22 +46,18 @@ interface Props
     autoScroll: boolean,
     addToHistory: (id:number) => void,
     onSwipe: (dir:SwipeDirection) => void,
-    setupTimer: () => void
+    setupTimer: () => void,
+    backgroundImageData: FetchData<BackgroundImage>
 }
 
-function Main({articleData, autoScroll, onSetAutoscroll, addToHistory, onSwipe, setupTimer}:Props)
+function Main({articleData, autoScroll, backgroundImageData, onSetAutoscroll, addToHistory, onSwipe, setupTimer}:Props)
 {
     const navigation = useNavigate();
     const [audioOn, setAudioOn] = useState<Boolean>(true);
-    const [backgroundImage, setBackgroundImage] = useState("");
-
-    useEffect(() => {
-        axios.get("api/getImage.php?type=main").then(
-            (res: AxiosResponse<BackgroundImage>) => setBackgroundImage(`url('${axios.defaults.baseURL}${res.data.url}')`)
-        );
-    }, [articleData])
-    
+    const backgroundImage:string = `${axios.defaults.baseURL}${backgroundImageData.read().url}`;
     const article:Article = articleData.read();
+
+    console.log(backgroundImage);
 
     if(article === null || !article.category) {
         onSwipe(SwipeDirection.UP);
@@ -89,7 +86,7 @@ function Main({articleData, autoScroll, onSetAutoscroll, addToHistory, onSwipe, 
 
     return (
         <GlobalHotKeys handlers={keyHandler} keyMap={keyMap} allowChanges={true}>
-            <div className="main" style={{ backgroundImage }} onClick={goToDetail} >
+            <ImageContainer style={{ display: "flex", flexDirection: "column" }} backgroundImage={backgroundImage} onClick={goToDetail} >
                 <Header toggleAudio={onSetAudio} audio={audioOn} toggleAutoScroll={onSetAutoscroll} autoScroll={autoScroll} article={article} setupTimer={setupTimer}/>
                 <div className="arrow-box">
                     <img src={UpArrow} onClick={e => { onSwipe(SwipeDirection.UP); e.stopPropagation(); } }/>
@@ -104,7 +101,7 @@ function Main({articleData, autoScroll, onSetAutoscroll, addToHistory, onSwipe, 
                 <div className="arrow-box">
                     <img src={DownArrow} onClick={e => { onSwipe(SwipeDirection.DOWN); e.stopPropagation(); }}/>
                 </div>
-            </div>
+            </ImageContainer>
         </GlobalHotKeys>
     );
 }

@@ -7,14 +7,10 @@ import { useEffect, useState } from "react";
 import axios, { AxiosResponse } from 'axios';
 import { BackgroundImage } from "@/types/Image";
 import GoBack from "../assets/goback.svg";
+import ImageContainer from "./ImageContainer";
 
 const styles = stylex.create({
     mainContainer: {
-        backgroundRepeat: "no-repeat",
-        backgroundSize: "cover",
-        backgroundPosition: "center center",
-        height: "100dvh",
-        width: "100dvw",
         overflow: "auto"
     },
     overlay: {
@@ -59,7 +55,7 @@ function ArticleView({articleData}:Props)
 
     useEffect(() => {
         axios.get("api/getImage.php?type=details").then(
-            (res: AxiosResponse<BackgroundImage>) => setBackgroundImage(`url('${axios.defaults.baseURL}${res.data.url}')`)
+            (res: AxiosResponse<BackgroundImage>) => setBackgroundImage(`${axios.defaults.baseURL}${res.data.url}`)
         );
     }, [])
 
@@ -84,7 +80,7 @@ function ArticleView({articleData}:Props)
     const header = getHeader();
 
     return(
-        <div onClick={onClick} {...stylex.props(styles.mainContainer)} style={{backgroundImage}}>
+        <ImageContainer onClick={onClick} {...stylex.props(styles.mainContainer)} backgroundImage={backgroundImage}>
             <div {...stylex.props(styles.overlay)}></div>
             <div {...stylex.props(styles.container)} >
                 <div {...stylex.props(styles.button)}>
@@ -98,7 +94,7 @@ function ArticleView({articleData}:Props)
                     <img src={GoBack} /> Go Back
                 </div>
             </div>
-        </div>
+        </ImageContainer>
     );    
 }
 
