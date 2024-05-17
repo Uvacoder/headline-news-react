@@ -93,7 +93,7 @@ function Main({articleData, autoScroll, backgroundImageData, onSetAutoscroll, ad
                 </div>
                 <div className="arrow-box content">
                     <img src={LeftArrow} onClick={e => { onSwipe(SwipeDirection.LEFT); e.stopPropagation(); }}/>
-                    <div>
+                    <div style={{ width: "100%" }}>
                         <ArticlePreview article={article} />
                     </div>
                     <img src={RightArrow} onClick={e => { onSwipe(SwipeDirection.RIGHT); e.stopPropagation(); }}/>

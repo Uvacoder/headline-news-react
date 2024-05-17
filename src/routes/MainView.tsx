@@ -41,7 +41,7 @@ function MainView({ addToHistory, popFromHistory, autoScroll, setAutoscroll } : 
             timerRef.current = window.setInterval(()=>{
                 autoScrolledCount.current++;
                 setFetchParams({modifier: autoScrolledCount.current});
-            }, 9000, article);
+            }, 15000, article);
         }
         else
         {
