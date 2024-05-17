@@ -5,7 +5,7 @@ import InfoIcon from "../assets/info.svg";
 
 const styles = stylex.create({
     container:{
-        backgroundColor: "transparent",
+        backgroundColor: "#f0f0f060",
         width: "100%",
         color: "white",
         textShadow: "2px 2px 4px black",

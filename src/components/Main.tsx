@@ -44,10 +44,11 @@ interface Props
     onSetAutoscroll: (scroll:boolean) => void,
     autoScroll: boolean,
     addToHistory: (id:number) => void,
-    onSwipe: (dir:SwipeDirection) => void
+    onSwipe: (dir:SwipeDirection) => void,
+    setupTimer: () => void
 }
 
-function Main({articleData, autoScroll, onSetAutoscroll, addToHistory, onSwipe}:Props)
+function Main({articleData, autoScroll, onSetAutoscroll, addToHistory, onSwipe, setupTimer}:Props)
 {
     const navigation = useNavigate();
     const [audioOn, setAudioOn] = useState<Boolean>(true);
@@ -60,8 +61,8 @@ function Main({articleData, autoScroll, onSetAutoscroll, addToHistory, onSwipe}:
     }, [articleData])
     
     const article:Article = articleData.read();
-    if(article === null) 
-    {
+
+    if(article === null || !article.category) {
         onSwipe(SwipeDirection.UP);
         navigation("/view");
         return;
@@ -89,7 +90,7 @@ function Main({articleData, autoScroll, onSetAutoscroll, addToHistory, onSwipe}:
     return (
         <GlobalHotKeys handlers={keyHandler} keyMap={keyMap} allowChanges={true}>
             <div className="main" style={{ backgroundImage }} onClick={goToDetail} >
-                <Header toggleAudio={onSetAudio} audio={audioOn} toggleAutoScroll={onSetAutoscroll} autoScroll={autoScroll} article={article}/>
+                <Header toggleAudio={onSetAudio} audio={audioOn} toggleAutoScroll={onSetAutoscroll} autoScroll={autoScroll} article={article} setupTimer={setupTimer}/>
                 <div className="arrow-box">
                     <img src={UpArrow} onClick={e => { onSwipe(SwipeDirection.UP); e.stopPropagation(); } }/>
                 </div>

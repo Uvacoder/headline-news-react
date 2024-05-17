@@ -106,11 +106,7 @@ function MainView({ addToHistory, popFromHistory, autoScroll, setAutoscroll } : 
         {
             case SwipeDirection.UP:
                 setupTimer();
-                const lastViewed = popFromHistory();
-                if(lastViewed)
-                {
-                    setFetchParams({articleid: lastViewed });
-                }
+                setFetchParams({modifier: autoScrolledCount.current});
                 return;            
             case SwipeDirection.LEFT:
                 setupTimer();
@@ -126,7 +122,11 @@ function MainView({ addToHistory, popFromHistory, autoScroll, setAutoscroll } : 
 
             case SwipeDirection.DOWN:
                 setupTimer();
-                setFetchParams({modifier: autoScrolledCount.current});
+                const lastViewed = popFromHistory();
+                if(lastViewed)
+                {
+                    setFetchParams({articleid: lastViewed });
+                }
                 return;
         }
     }
@@ -134,7 +134,7 @@ function MainView({ addToHistory, popFromHistory, autoScroll, setAutoscroll } : 
     return (
         <Suspense fallback={<LoadingFallback />} >
             <div onTouchStart={onTouchStart} onTouchEnd={onTouchEnd} style={{ width: "100vw", height: "100%"}}>
-                <Main articleData={article} addToHistory={addToHistory} onSetAutoscroll={(val)=>{setAutoscroll(val)}} autoScroll={autoScroll} onSwipe={doSwipe}/>
+                <Main articleData={article} addToHistory={addToHistory} onSetAutoscroll={(val)=>{setAutoscroll(val)}} autoScroll={autoScroll} onSwipe={doSwipe} setupTimer={setupTimer}/>
             </div>
         </Suspense>
     );

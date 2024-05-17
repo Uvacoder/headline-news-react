@@ -13,12 +13,13 @@ const styles = stylex.create({
     heading: {
         position: "absolute",
         top: "50%",
-        left: "0",
-        fontSize: "1.2em",
+        left: "0.25em",
+        fontSize: "1em",
+        fontWeight: "bold",
         whiteSpace: "nowrap",
         transform: "rotate(-90deg)",
-        transformOrigin: "top left",
-        translate: "0 150%"
+        transformOrigin: "center center",
+        translate: "-50% -50%"
     },
     TextSection:
     {
@@ -30,6 +31,8 @@ const styles = stylex.create({
         justifyContent: "center",
         alignItems: "center",
         height: "100%",
+        backgroundColor: "#f0f0f060",
+        minHeight: "100px",
     },
     text:{
         textAlign: "center",
@@ -41,23 +44,23 @@ const styles = stylex.create({
         display: "-webkit-box",
         WebkitBoxOrient: "vertical",
         overflow: "hidden",
+        wordBreak: "break-word"
     },
 });
 
 interface Props
 {
     children:ReactNode,
-    backgroundColor:string,
     lines?:number,
     heading?:string
 }
 
-function TextSection({children, backgroundColor, lines, heading}: Props)
+function TextSection({children, lines, heading}: Props)
 {
     return(
         <div { ...stylex.props(styles.container)}>
             {heading ? <div { ...stylex.props(styles.heading)}>{ heading }</div> : null}
-            <div {...stylex.props(styles.TextSection)} style={{ backgroundColor, marginLeft: (heading ? "2em" : "0") }}>
+            <div {...stylex.props(styles.TextSection)} style={{ marginLeft: (heading ? "1em" : "0") }}>
                 <div {...stylex.props(styles.text)} style={ lines ? { WebkitLineClamp: lines } : {} }>{children}</div>
             </div>
         </div>

@@ -46,12 +46,14 @@ const styles = stylex.create({
         position: "absolute",
         textShadow: "2px 2px 4px black",
         color: "white",
-        display: "grid",
         padding: "0.5em",
-        gridTemplateColumns: "min-content auto",
         zIndex: "3",
         height: "100vh",
         overflow: "auto"
+    },
+    control: {
+        display: "grid",
+        gridTemplateColumns: "min-content auto",
     },
     heading: {
         textAlign: "center",
@@ -59,11 +61,11 @@ const styles = stylex.create({
         color: "#f02010"
     },
     textSection: {
-        border: "2px solid #80f08060",
+        border: "2px solid black",
+        backgroundColor: "#f0f0f060",
         borderRadius: "10px",
         padding: "0.5em",
-        marginBlock: "1em",
-        marginRight: "1em",
+        margin: "1em",
         minHeight: "40px"
     }
 });
@@ -74,10 +76,11 @@ interface Props
     audio: Boolean,
     toggleAutoScroll: (on:boolean) => void,
     autoScroll: Boolean,
-    article: Article
+    article: Article,
+    setupTimer: () => void,
 }
 
-function Menu({toggleAudio, audio, toggleAutoScroll, autoScroll, article}:Props)
+function Menu({toggleAudio, audio, toggleAutoScroll, autoScroll, article, setupTimer}:Props)
 {
     const navigation = useNavigate();
     const [showMenu, setShowMenu] = useState<Boolean>(false);
@@ -89,6 +92,8 @@ function Menu({toggleAudio, audio, toggleAutoScroll, autoScroll, article}:Props)
         setShowMenu(prev => !prev);       
     }
 
+    setupTimer();
+    
     useEffect(() => {
         axios.get("api/getImage.php?type=hamburger").then(
             (res: AxiosResponse<BackgroundImage>) => setBackgroundImage(`url('${axios.defaults.baseURL}${res.data.url}')`)
@@ -121,15 +126,19 @@ function Menu({toggleAudio, audio, toggleAutoScroll, autoScroll, article}:Props)
             <div {...stylex.props(styles.menuContainer)} style={{backgroundImage}} onTouchStart={blockTouch} onTouchEnd={blockTouch}>
                 <div {...stylex.props(styles.overlay)}></div>
                 <div {...stylex.props(styles.content)}>
-                    <div {...stylex.props(styles.menuButtonExpanded)} >
-                        <img src={CloseMenu} style={{ width: "2.5em", height: "2.5em" }} onClick={onShowMenu}/>
+                    <div {...stylex.props(styles.control)}>
+                        <div {...stylex.props(styles.menuButtonExpanded)} >
+                            <img src={CloseMenu} style={{ width: "2.5em", height: "2.5em" }} onClick={onShowMenu}/>
+                        </div>
+                        <div>
+                            <MenuToggleItem heading="Audio" value={audio} onClick={()=>toggleAudio(!audio)} />
+                            <MenuToggleItem heading="Auto Scroll" value={autoScroll} onClick={()=>toggleAutoScroll(!autoScroll)} />
+                            <Link to="/about">About Us</Link> <br/>
+                            <Link to="/contact">Contact Us</Link>
+                        </div>
                     </div>
                     <div>
-                        <MenuToggleItem heading="Audio" value={audio} onClick={()=>toggleAudio(!audio)} />
-                        <MenuToggleItem heading="Auto Scroll" value={autoScroll} onClick={()=>toggleAutoScroll(!autoScroll)} />
-                        <Link to="/about">About Us</Link> <br/>
-                        <Link to="/contact">Contact Us</Link>
-                        <h3 {...stylex.props(styles.heading)}>Notable Quotes</h3>
+                        <h2 {...stylex.props(styles.heading)}>Notable Quotes</h2>
                         {
                             whoppers.map((whopper:Whopper) => (
                                 <div key={whopper.id} {...stylex.props(styles.textSection)} onClick={() => goToDetail(whopper.id)}>

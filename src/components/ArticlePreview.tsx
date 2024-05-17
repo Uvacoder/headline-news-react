@@ -34,9 +34,9 @@ function ArticlePreview({article}:Props)
     const containerStyle = article.rebuttal && article.summary ? styles.container : styles.rebuttalessContainer;
     return(        
         <div {...stylex.props(containerStyle)}>
-            <TextSection backgroundColor="#40404040" heading="Heading" lines={2}>{article.shortHeadline}</TextSection>
-            {article.summary ? <TextSection backgroundColor="#f0f0f060" heading="Summary" lines={article.rebuttal ? 4 : 7}>{article.summary}</TextSection> : null}
-            {article.rebuttal ? <TextSection backgroundColor="#80f08060" heading="Real World" lines={article.summary ? 4 : 7}>{article.rebuttal}</TextSection>: null}
+            <TextSection heading="Headline" lines={2}>{article.shortHeadline}</TextSection>
+            {article.summary ? <TextSection heading="Summary" lines={article.rebuttal ? 4 : 7}>{article.summary}</TextSection> : null}
+            {article.rebuttal ? <TextSection heading="Rebuttal" lines={article.summary ? 4 : 7}>{article.rebuttal}</TextSection>: null}
         </div>
     );
 }

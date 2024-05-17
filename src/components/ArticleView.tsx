@@ -33,7 +33,7 @@ const styles = stylex.create({
         flexDirection: "column",
         gap: "1em",
         margin: "1em",
-        zIndex: "2",
+        zIndex: "2"
     },
     button: {
         display: "flex",
@@ -66,7 +66,7 @@ function ArticleView({articleData}:Props)
 
     const onClick = ()=>
     {
-        navigate("/view");
+        navigate(-1);
     }
 
     const getHeader = ()=>
@@ -90,10 +90,10 @@ function ArticleView({articleData}:Props)
                 <div {...stylex.props(styles.button)}>
                     <img src={GoBack} /> Go Back
                 </div>
-                <TextSection backgroundColor="#40404040">{header}</TextSection>
-                {article.source != ""? <TextSection backgroundColor="#f0f0f060">{article.shortHeadline}</TextSection> : null }
-                {article.completeArticle != "" ? <TextSection backgroundColor="#f0f0f060">{article.completeArticle}</TextSection> : null }
-                {article.rebuttal != ""? <TextSection backgroundColor="#80f08060">{article.rebuttal}</TextSection>  : null}
+                <TextSection heading="Source">{header}</TextSection>
+                {article.source != ""? <TextSection heading="Headline">{article.shortHeadline}</TextSection> : null }
+                {article.completeArticle != "" ? <TextSection heading="Full Article">{article.completeArticle}</TextSection> : null }
+                {article.rebuttal != ""? <TextSection heading="Rebuttal">{article.rebuttal}</TextSection>  : null}
                 <div {...stylex.props(styles.button)} style={{ justifyContent: "flex-end"}}>
                     <img src={GoBack} /> Go Back
                 </div>
