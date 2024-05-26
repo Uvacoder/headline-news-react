@@ -68,24 +68,23 @@ const styles = stylex.create({
 
 interface Props
 {
-    toggleAudio: (on:boolean) => void,
-    audio: Boolean,
+    showMenu: boolean,
+    setShowMenu: (id:boolean) => void,
     toggleAutoScroll: (on:boolean) => void,
     autoScroll: Boolean,
     article: Article,
     setupTimer: () => void,
 }
 
-function Menu({toggleAudio, audio, toggleAutoScroll, autoScroll, article, setupTimer}:Props)
+function Menu({showMenu, setShowMenu, toggleAutoScroll, autoScroll, article, setupTimer}:Props)
 {
     const navigation = useNavigate();
-    const [showMenu, setShowMenu] = useState<Boolean>(false);
     const [whoppers, setWhoppers] = useState<Whopper[]>([]);
     const [backgroundImage, setBackgroundImage] = useState("");
 
     const onShowMenu = () =>
     {
-        setShowMenu(prev => !prev);       
+        setShowMenu(!showMenu);       
     }
 
     setupTimer();
@@ -127,7 +126,6 @@ function Menu({toggleAudio, audio, toggleAutoScroll, autoScroll, article, setupT
                             <img src={CloseMenu} style={{ width: "2.5em", height: "2.5em" }} onClick={onShowMenu}/>
                         </div>
                         <div>
-                            <MenuToggleItem heading="Audio" value={audio} onClick={()=>toggleAudio(!audio)} />
                             <MenuToggleItem heading="Auto Scroll" value={autoScroll} onClick={()=>toggleAutoScroll(!autoScroll)} />
                             <Link to="/about">About Us</Link> <br/>
                             <Link to="/contact">Contact Us</Link>
@@ -135,6 +133,7 @@ function Menu({toggleAudio, audio, toggleAutoScroll, autoScroll, article, setupT
                     </div>
                     <div>
                         <h2 {...stylex.props(styles.heading)}>Notable Quotes</h2>
+                        <h3 style={{ textAlign: "center", color: "white" }}>Click a quote for details</h3>
                         {
                             whoppers.map((whopper:Whopper) => (
                                 <div key={whopper.id} {...stylex.props(styles.textSection)} onClick={() => goToDetail(whopper.id)}>

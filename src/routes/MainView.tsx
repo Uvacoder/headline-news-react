@@ -1,10 +1,11 @@
-import { Suspense, useEffect, useRef, useState, TouchEvent } from "react";
+import { Suspense, useEffect, useRef, useState, TouchEvent, startTransition } from "react";
 import { Article } from "@/types/Article";
 import useFetchApi from "@/hooks/useFetchApi";
 import ArticleFetchParams from "@/types/ArticleFetchParams";
 import Main, { SwipeDirection } from "@/components/Main";
 import LoadingFallback from "@/components/LoadingFallback";
 import { BackgroundImage } from "@/types/Image";
+import axios, { AxiosResponse } from "axios";
 
 interface TouchPoint
 {
@@ -17,10 +18,12 @@ interface Props
     addToHistory: (id:number) => void,
     popFromHistory: () => number,
     autoScroll: boolean,
-    setAutoscroll: (id:boolean) => void
+    setAutoscroll: (id:boolean) => void,
+    showMenu: boolean,
+    setShowMenu: (id:boolean) => void
 }
 
-function MainView({ addToHistory, popFromHistory, autoScroll, setAutoscroll } : Props)
+function MainView({ showMenu, setShowMenu, addToHistory, popFromHistory, autoScroll, setAutoscroll } : Props)
 {
     const [fetchParams, setFetchParams] = useState<ArticleFetchParams>({latest: true});
     const article = useFetchApi<Article>("api/article.php", fetchParams);
@@ -133,9 +136,15 @@ function MainView({ addToHistory, popFromHistory, autoScroll, setAutoscroll } : 
 
     return (
         <Suspense fallback={<LoadingFallback />} >
-            <div onTouchStart={onTouchStart} onTouchEnd={onTouchEnd} style={{ width: "100vw", height: "100%"}}>
-                <Main articleData={article} backgroundImageData={backgroundImage} addToHistory={addToHistory} onSetAutoscroll={(val)=>{setAutoscroll(val)}} autoScroll={autoScroll} onSwipe={doSwipe} setupTimer={setupTimer}/>
-            </div>
+        <div onTouchStart={onTouchStart} onTouchEnd={onTouchEnd} style={{ width: "100vw", height: "100%"}}>
+            <Main 
+                articleData={article} backgroundImageData={backgroundImage}
+                addToHistory={addToHistory}
+                onSetAutoscroll={setAutoscroll} autoScroll={autoScroll}
+                onSwipe={doSwipe} setupTimer={setupTimer}
+                showMenu={showMenu} setShowMenu={setShowMenu}
+            />
+        </div>
         </Suspense>
     );
 }

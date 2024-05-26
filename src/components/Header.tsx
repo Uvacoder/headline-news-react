@@ -18,15 +18,15 @@ const styles = stylex.create({
 
 interface Props
 {
-    toggleAudio: (on:boolean) => void,
-    audio: Boolean,
+    showMenu: boolean,
+    setShowMenu: (id:boolean) => void,
     toggleAutoScroll: (on:boolean) => void,
     autoScroll: Boolean,
     article:Article,
     setupTimer: () => void,
 }
 
-function Header({toggleAudio ,audio, toggleAutoScroll, autoScroll, article, setupTimer}:Props)
+function Header({showMenu, setShowMenu, toggleAutoScroll, autoScroll, article, setupTimer}:Props)
 {   
     const [backgroundImage, setBackgroundImage] = useState("");
 
@@ -38,7 +38,7 @@ function Header({toggleAudio ,audio, toggleAutoScroll, autoScroll, article, setu
 
     return(
         <div {...stylex.props(styles.header)}>
-            <Menu toggleAudio={toggleAudio} audio={audio} toggleAutoScroll={toggleAutoScroll} autoScroll={autoScroll} article={article} setupTimer={setupTimer}/>
+            <Menu setShowMenu={setShowMenu} showMenu={showMenu} toggleAutoScroll={toggleAutoScroll} autoScroll={autoScroll} article={article} setupTimer={setupTimer}/>
             <img src={backgroundImage} style={{width: "58px", height:"58px", border: "2px solid white"}}/>
             <Suspense>
                 <ArticleSource article={article} />

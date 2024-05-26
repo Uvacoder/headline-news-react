@@ -47,17 +47,16 @@ interface Props
     addToHistory: (id:number) => void,
     onSwipe: (dir:SwipeDirection) => void,
     setupTimer: () => void,
-    backgroundImageData: FetchData<BackgroundImage>
+    backgroundImageData: FetchData<BackgroundImage>,
+    showMenu: boolean,
+    setShowMenu: (id:boolean) => void
 }
 
-function Main({articleData, autoScroll, backgroundImageData, onSetAutoscroll, addToHistory, onSwipe, setupTimer}:Props)
+function Main({articleData, autoScroll, showMenu, setShowMenu, backgroundImageData, onSetAutoscroll, addToHistory, onSwipe, setupTimer}:Props)
 {
     const navigation = useNavigate();
-    const [audioOn, setAudioOn] = useState<Boolean>(true);
     const backgroundImage:string = `${axios.defaults.baseURL}${backgroundImageData.read().url}`;
     const article:Article = articleData.read();
-
-    console.log(backgroundImage);
 
     if(article === null || !article.category) {
         onSwipe(SwipeDirection.UP);
@@ -66,11 +65,6 @@ function Main({articleData, autoScroll, backgroundImageData, onSetAutoscroll, ad
     }
 
     addToHistory(article.id);
-    
-    const onSetAudio = (on:boolean)=>
-    {
-        setAudioOn(on);
-    }
 
     const goToDetail = ()=>
     {
@@ -87,7 +81,12 @@ function Main({articleData, autoScroll, backgroundImageData, onSetAutoscroll, ad
     return (
         <GlobalHotKeys handlers={keyHandler} keyMap={keyMap} allowChanges={true}>
             <ImageContainer style={{ display: "flex", flexDirection: "column" }} backgroundImage={backgroundImage} onClick={goToDetail} >
-                <Header toggleAudio={onSetAudio} audio={audioOn} toggleAutoScroll={onSetAutoscroll} autoScroll={autoScroll} article={article} setupTimer={setupTimer}/>
+                <Header 
+                    showMenu={showMenu} setShowMenu={setShowMenu}
+                    toggleAutoScroll={onSetAutoscroll} autoScroll={autoScroll}
+                    article={article} setupTimer={setupTimer}
+                />
+                <h3 style={{ textAlign: "center", color: "white", textShadow: "2px 2px 4px black"}}>Click a quote for details</h3>
                 <div className="arrow-box">
                     <img src={UpArrow} onClick={e => { onSwipe(SwipeDirection.UP); e.stopPropagation(); } }/>
                 </div>

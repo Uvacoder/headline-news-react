@@ -16,6 +16,7 @@ function App()
 {
   const articleHistory = useRef<number[]>([]);
   const [autoScroll, setAutoscroll] = useState<boolean>(true);
+  const [showMenu, setShowMenu] = useState<boolean>(false);
 
   const addToHistory = (id:number) => {
     if(articleHistory.current.length == 0)
@@ -44,7 +45,14 @@ function App()
         <Routes>
           <Route path="/" element={<LandingView />} />
           <Route path="/instruction" element={<InstructionView />} />
-          <Route path="/view" element={<MainView addToHistory={addToHistory} popFromHistory={popFromHistory} autoScroll={autoScroll} setAutoscroll={setAutoscroll} />}  />
+          <Route path="/view" element={
+              <MainView
+                addToHistory={addToHistory} popFromHistory={popFromHistory}
+                autoScroll={autoScroll} setAutoscroll={setAutoscroll}
+                showMenu={showMenu} setShowMenu={setShowMenu}
+              />
+            }
+          />
           <Route path="/details" element={<DetailedView />} />
           <Route path="/admin" element={<Admin />} />
           <Route path="/about" element={<AboutUs />} />
