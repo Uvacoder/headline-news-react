@@ -86,7 +86,7 @@ function Main({articleData, autoScroll, showMenu, setShowMenu, backgroundImageDa
                     toggleAutoScroll={onSetAutoscroll} autoScroll={autoScroll}
                     article={article} setupTimer={setupTimer}
                 />
-                <h3 style={{ textAlign: "center", color: "white", textShadow: "2px 2px 4px black"}}>Click a quote for details</h3>
+                <p style={{ textAlign: "center", fontSize: "1em", fontWeight: "bold", color: "white", textShadow: "2px 2px 4px black"}}>Click anywhere for details</p>
                 <div className="arrow-box">
                     <img src={UpArrow} onClick={e => { onSwipe(SwipeDirection.UP); e.stopPropagation(); } }/>
                 </div>
