@@ -160,22 +160,21 @@ function MainView({showMenu, setShowMenu, addToHistory, popFromHistory, autoScro
         }
     }
 
+    if(!(article && backgroundImage)) return <LoadingFallback />;
+
     return (
         <div onTouchStart={onTouchStart} onTouchEnd={onTouchEnd} style={{ width: "100vw", height: "100%"}}>
-            {
-                article && backgroundImage &&
-                <Main
-                    article={article}
-                    backgroundImage={backgroundImage}
-                    addToHistory={addToHistory}
-                    onSetAutoscroll={setAutoscroll}
-                    autoScroll={autoScroll}
-                    onSwipe={doSwipe}
-                    setupTimer={setupTimer}
-                    showMenu={showMenu}
-                    setShowMenu={setShowMenu}
-                />
-            }
+            <Main
+                article={article}
+                backgroundImage={backgroundImage}
+                addToHistory={addToHistory}
+                onSetAutoscroll={setAutoscroll}
+                autoScroll={autoScroll}
+                onSwipe={doSwipe}
+                setupTimer={setupTimer}
+                showMenu={showMenu}
+                setShowMenu={setShowMenu}
+            />
             { isLoading && <LoadingFallback /> }
         </div>
     );
