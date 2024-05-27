@@ -19,6 +19,7 @@ const styles = stylex.create({
 interface Props
 {
     showMenu: boolean,
+    gifImage: string,
     setShowMenu: (id:boolean) => void,
     toggleAutoScroll: (on:boolean) => void,
     autoScroll: Boolean,
@@ -26,20 +27,12 @@ interface Props
     setupTimer: () => void,
 }
 
-function Header({showMenu, setShowMenu, toggleAutoScroll, autoScroll, article, setupTimer}:Props)
+function Header({showMenu, setShowMenu, gifImage, toggleAutoScroll, autoScroll, article, setupTimer}:Props)
 {   
-    const [backgroundImage, setBackgroundImage] = useState("");
-
-    useEffect(() => {
-        axios.get(`api/getImage.php?type=gif/${article.category}`).then(
-            (res: AxiosResponse<BackgroundImage>) => setBackgroundImage(`${axios.defaults.baseURL}${res.data.url}`)
-        );
-    }, [article])
-
     return(
         <div {...stylex.props(styles.header)}>
             <Menu setShowMenu={setShowMenu} showMenu={showMenu} toggleAutoScroll={toggleAutoScroll} autoScroll={autoScroll} article={article} setupTimer={setupTimer}/>
-            <img src={backgroundImage} style={{width: "58px", height:"58px", border: "2px solid white"}}/>
+            <img src={gifImage} style={{width: "58px", height:"58px", border: "2px solid white"}}/>
             <Suspense>
                 <ArticleSource article={article} />
             </Suspense>      

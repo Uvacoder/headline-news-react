@@ -29,7 +29,7 @@ function MainView({showMenu, setShowMenu, addToHistory, popFromHistory, autoScro
     const [isLoading, setLoading] = useState<boolean>(false);
     const [article, setArticle] = useState<Article | null>(null);
     const [backgroundImage, setBackgroundImage] = useState<string>('');
-   // const [gifImage, setGifImage] = useState<string>('');
+    const [gifImage, setGifImage] = useState<string>('');
 
 
     useEffect(() => {
@@ -43,13 +43,18 @@ function MainView({showMenu, setShowMenu, addToHistory, popFromHistory, autoScro
                 const img = new Image();
                 img.src = `${axios.defaults.baseURL}${responses[1].data.url}`;
                 img.onload = () => {            
-                    //axios.get(`api/getImage.php?type=gif/${article_data.category}`).then(
-                    //    (res: AxiosResponse<BackgroundImage>) => {     
-                            setBackgroundImage(img.src);
-                            setArticle(article_data);
-                            setLoading(false);
-                        //}
-                    //);
+                    axios.get(`api/getImage.php?type=gif/${article_data.category}`).then(
+                        (res: AxiosResponse<BackgroundImage>) => {
+                            const gif = new Image();
+                            gif.src = `${axios.defaults.baseURL}${res.data.url}`;
+                            gif.onload = () => {
+                                setArticle(article_data);
+                                setBackgroundImage(img.src);
+                                setGifImage(gif.src);
+                                setLoading(false);
+                            }
+                        }
+                    );
                 };
             });
         }        
@@ -160,13 +165,14 @@ function MainView({showMenu, setShowMenu, addToHistory, popFromHistory, autoScro
         }
     }
 
-    if(!(article && backgroundImage)) return <LoadingFallback />;
+    if(!(article && backgroundImage && gifImage)) return <LoadingFallback />;
 
     return (
         <div onTouchStart={onTouchStart} onTouchEnd={onTouchEnd} style={{ width: "100vw", height: "100%"}}>
             <Main
                 article={article}
                 backgroundImage={backgroundImage}
+                gifImage={gifImage}
                 addToHistory={addToHistory}
                 onSetAutoscroll={setAutoscroll}
                 autoScroll={autoScroll}

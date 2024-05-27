@@ -1,14 +1,7 @@
-import { useState } from "react";
-
 import { Article } from "@/types/Article";
-import { FetchData } from "@/types/FetchData";
 
 import Header from "./Header";
 import ArticlePreview from "./ArticlePreview";
-
-import axios from 'axios';
-import { BackgroundImage } from "@/types/Image";
-
 import UpArrow from "../assets/uparrow.svg";
 import DownArrow from "../assets/downarrow.svg";
 import LeftArrow from "../assets/leftarrow.svg";
@@ -48,11 +41,12 @@ interface Props
     onSwipe: (dir:SwipeDirection) => void,
     setupTimer: () => void,
     backgroundImage: string,
+    gifImage: string,
     showMenu: boolean,
     setShowMenu: (id:boolean) => void
 }
 
-function Main({article, autoScroll, showMenu, setShowMenu, backgroundImage, onSetAutoscroll, addToHistory, onSwipe, setupTimer}:Props)
+function Main({article, autoScroll, showMenu, setShowMenu, gifImage, backgroundImage, onSetAutoscroll, addToHistory, onSwipe, setupTimer}:Props)
 {
     const navigation = useNavigate();
 
@@ -80,9 +74,13 @@ function Main({article, autoScroll, showMenu, setShowMenu, backgroundImage, onSe
         <GlobalHotKeys handlers={keyHandler} keyMap={keyMap} allowChanges={true}>
             <ImageContainer style={{ display: "flex", flexDirection: "column" }} backgroundImage={backgroundImage} onClick={goToDetail} >
                 <Header 
-                    showMenu={showMenu} setShowMenu={setShowMenu}
-                    toggleAutoScroll={onSetAutoscroll} autoScroll={autoScroll}
-                    article={article} setupTimer={setupTimer}
+                    showMenu={showMenu}
+                    setShowMenu={setShowMenu}
+                    toggleAutoScroll={onSetAutoscroll}
+                    autoScroll={autoScroll}
+                    gifImage={gifImage}
+                    article={article}
+                    setupTimer={setupTimer}
                 />
                 <p style={{ textAlign: "center", fontSize: "1em", fontWeight: "bold", color: "white", textShadow: "2px 2px 4px black"}}>Click anywhere for details</p>
                 <div className="arrow-box">
