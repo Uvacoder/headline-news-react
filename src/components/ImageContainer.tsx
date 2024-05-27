@@ -5,21 +5,7 @@ interface Props extends HTMLAttributes<HTMLDivElement> {
     backgroundImage: string;
 }
 
-const ImageContainer = ({backgroundImage, children, style, ...restProps}: Props) => {
-    const [isLoading, setIsLoading] = useState(true);
-
-    useEffect(() => {
-        if(backgroundImage) {
-            const img = new Image();
-            img.src = backgroundImage;
-            img.onload = () => {
-                setIsLoading(false);
-            };
-        }        
-    }, [backgroundImage]);
-
-    if(isLoading) return <LoadingFallback />;
-    
+const ImageContainer = ({backgroundImage, children, style, ...restProps}: Props) => {  
     return (
         <div
             {...restProps}

@@ -1,11 +1,11 @@
-import { Suspense, useEffect, useRef, useState, TouchEvent, startTransition } from "react";
+import { useEffect, useRef, useState, TouchEvent } from "react";
 import { Article } from "@/types/Article";
-import useFetchApi from "@/hooks/useFetchApi";
 import ArticleFetchParams from "@/types/ArticleFetchParams";
 import Main, { SwipeDirection } from "@/components/Main";
 import LoadingFallback from "@/components/LoadingFallback";
 import { BackgroundImage } from "@/types/Image";
 import axios, { AxiosResponse } from "axios";
+import { blockSize } from "node_modules/@stylexjs/stylex/lib/StyleXCSSTypes";
 
 interface TouchPoint
 {
@@ -23,11 +23,37 @@ interface Props
     setShowMenu: (id:boolean) => void
 }
 
-function MainView({ showMenu, setShowMenu, addToHistory, popFromHistory, autoScroll, setAutoscroll } : Props)
+function MainView({showMenu, setShowMenu, addToHistory, popFromHistory, autoScroll, setAutoscroll } : Props)
 {
     const [fetchParams, setFetchParams] = useState<ArticleFetchParams>({latest: true});
-    const article = useFetchApi<Article>("api/article.php", fetchParams);
-    const backgroundImage = useFetchApi<BackgroundImage>("api/getImage.php?type=main");
+    const [isLoading, setLoading] = useState<boolean>(false);
+    const [article, setArticle] = useState<Article | null>(null);
+    const [backgroundImage, setBackgroundImage] = useState<string>('');
+   // const [gifImage, setGifImage] = useState<string>('');
+
+
+    useEffect(() => {
+        if(!isLoading) {
+            setLoading(true);
+            Promise.all([
+                axios.get("api/article.php", { params: fetchParams}),
+                axios.get("api/getImage.php?type=main")
+            ]).then((responses: Array<AxiosResponse>) => {
+                const article_data = responses[0].data;
+                const img = new Image();
+                img.src = `${axios.defaults.baseURL}${responses[1].data.url}`;
+                img.onload = () => {            
+                    //axios.get(`api/getImage.php?type=gif/${article_data.category}`).then(
+                    //    (res: AxiosResponse<BackgroundImage>) => {     
+                            setBackgroundImage(img.src);
+                            setArticle(article_data);
+                            setLoading(false);
+                        //}
+                    //);
+                };
+            });
+        }        
+    }, [fetchParams]);
     
     const timerRef = useRef<number>();
     const autoScrolledCount = useRef<number>(0);
@@ -56,7 +82,7 @@ function MainView({ showMenu, setShowMenu, addToHistory, popFromHistory, autoScr
 
     const onTouchStart = (param:TouchEvent<HTMLDivElement>)=>
     {
-        if(article.getStatus() !== "pending")
+        if(!isLoading)
         {
             if(param.changedTouches.length !== 0)
             {
@@ -135,17 +161,23 @@ function MainView({ showMenu, setShowMenu, addToHistory, popFromHistory, autoScr
     }
 
     return (
-        <Suspense fallback={<LoadingFallback />} >
         <div onTouchStart={onTouchStart} onTouchEnd={onTouchEnd} style={{ width: "100vw", height: "100%"}}>
-            <Main 
-                articleData={article} backgroundImageData={backgroundImage}
-                addToHistory={addToHistory}
-                onSetAutoscroll={setAutoscroll} autoScroll={autoScroll}
-                onSwipe={doSwipe} setupTimer={setupTimer}
-                showMenu={showMenu} setShowMenu={setShowMenu}
-            />
+            {
+                article && backgroundImage &&
+                <Main
+                    article={article}
+                    backgroundImage={backgroundImage}
+                    addToHistory={addToHistory}
+                    onSetAutoscroll={setAutoscroll}
+                    autoScroll={autoScroll}
+                    onSwipe={doSwipe}
+                    setupTimer={setupTimer}
+                    showMenu={showMenu}
+                    setShowMenu={setShowMenu}
+                />
+            }
+            { isLoading && <LoadingFallback /> }
         </div>
-        </Suspense>
     );
 }
 

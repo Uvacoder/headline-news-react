@@ -41,28 +41,26 @@ const keyMap = {
 
 interface Props
 {
-    articleData:FetchData<Article>,
+    article: Article,
     onSetAutoscroll: (scroll:boolean) => void,
     autoScroll: boolean,
     addToHistory: (id:number) => void,
     onSwipe: (dir:SwipeDirection) => void,
     setupTimer: () => void,
-    backgroundImageData: FetchData<BackgroundImage>,
+    backgroundImage: string,
     showMenu: boolean,
     setShowMenu: (id:boolean) => void
 }
 
-function Main({articleData, autoScroll, showMenu, setShowMenu, backgroundImageData, onSetAutoscroll, addToHistory, onSwipe, setupTimer}:Props)
+function Main({article, autoScroll, showMenu, setShowMenu, backgroundImage, onSetAutoscroll, addToHistory, onSwipe, setupTimer}:Props)
 {
     const navigation = useNavigate();
-    const backgroundImage:string = `${axios.defaults.baseURL}${backgroundImageData.read().url}`;
-    const article:Article = articleData.read();
 
-    if(article === null || !article.category) {
-        onSwipe(SwipeDirection.UP);
-        navigation("/view");
-        return;
-    }
+    // if(article === null || !article.category) {
+    //     onSwipe(SwipeDirection.UP);
+    //     navigation("/view");
+    //     return;
+    // }
 
     addToHistory(article.id);
 

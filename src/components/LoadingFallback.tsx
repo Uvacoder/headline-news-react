@@ -2,8 +2,6 @@ import stylex from "@stylexjs/stylex";
 
 import { IconLoader2 } from "@tabler/icons-react";
 
-import { Colors } from "../styles/token.stylex";
-
 const rotate = stylex.keyframes({
     '0%': {transform: "rotate(0)"},
     '100%': {transform: 'rotate(360deg)'}
@@ -11,7 +9,7 @@ const rotate = stylex.keyframes({
 
 const styles = stylex.create({
     loader:{
-        backgroundColor: Colors.secondary,
+        backgroundColor: "transparent",
         position: "fixed",
         top: "0",
         left: "0",
