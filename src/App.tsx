@@ -11,24 +11,27 @@ import InstructionView from "./routes/InstructionView";
 import Admin from "./routes/Admin";
 import AboutUs from "./routes/AboutUs";
 import ContactUs from "./routes/ContactUs";
-import { Article } from "./types/Article";
+import { ArticleHistory } from "./types/ArticleHistory";
 
 function App() 
 {
-  const articleHistory = useRef<number[]>([]);
+  const articleHistory = useRef<ArticleHistory[]>([]);
   const [autoScroll, setAutoscroll] = useState<boolean>(true);
   const [showMenu, setShowMenu] = useState<boolean>(false);
 
-  const addToHistory = (article:Article | null) => {
-    if(!article) return;
-    if(articleHistory.current.length && articleHistory.current[articleHistory.current.length - 1] === article.id) return;
-    articleHistory.current.push(article.id);
+  const addToHistory = (history: ArticleHistory) => {
+    if(
+      articleHistory.current.length && 
+      articleHistory.current[articleHistory.current.length - 1].article.id === history.article.id
+    )
+      return;
+    articleHistory.current.push(history);
     if(articleHistory.current.length > 10)
       articleHistory.current.shift();
   };
 
   const popFromHistory = () => {
-    return articleHistory.current.pop() ?? 0;
+    return articleHistory.current.pop() ?? null;
   }
 
   return (

@@ -5,6 +5,7 @@ import Main, { SwipeDirection } from "@/components/Main";
 import LoadingFallback from "@/components/LoadingFallback";
 import { BackgroundImage } from "@/types/Image";
 import axios, { AxiosResponse } from "axios";
+import { ArticleHistory } from "@/types/ArticleHistory";
 
 interface TouchPoint
 {
@@ -14,8 +15,8 @@ interface TouchPoint
 
 interface Props
 {
-    addToHistory: (article:Article | null) => void,
-    popFromHistory: () => number,
+    addToHistory: (history: ArticleHistory) => void,
+    popFromHistory: () => ArticleHistory | null,
     autoScroll: boolean,
     setAutoscroll: (id:boolean) => void,
     showMenu: boolean,
@@ -35,6 +36,15 @@ function MainView({showMenu, setShowMenu, addToHistory, popFromHistory, autoScro
         setBackgroundImage(_backgroundImage);
         setGifImage(_gifImage);
         setLoading(false);
+    }
+
+    const saveHistory = () => {
+        if(!article) return;
+        addToHistory({
+            article,
+            backgroundImage,
+            gifImage
+        })
     }
 
     useEffect(() => {
@@ -79,8 +89,8 @@ function MainView({showMenu, setShowMenu, addToHistory, popFromHistory, autoScro
                 clearInterval(timerRef.current);
             }
 
-            timerRef.current = window.setInterval(()=>{
-                addToHistory(article);
+            timerRef.current = window.setInterval(()=> {
+                saveHistory();
                 autoScrolledCount.current++;
                 setFetchParams({modifier: autoScrolledCount.current});
             }, 15000, article);
@@ -147,19 +157,19 @@ function MainView({showMenu, setShowMenu, addToHistory, popFromHistory, autoScro
         switch(dir)
         {
             case SwipeDirection.UP:
-                addToHistory(article);
+                saveHistory();
                 setupTimer();
                 setFetchParams({modifier: autoScrolledCount.current});
                 return;            
             case SwipeDirection.LEFT:
-                addToHistory(article);
+                saveHistory();
                 setupTimer();
                 autoScrolledCount.current++;
                 setFetchParams({type: "liar", modifier: autoScrolledCount.current});
                 return;
 
             case SwipeDirection.RIGHT:
-                addToHistory(article);
+                saveHistory();
                 setupTimer();
                 autoScrolledCount.current++;
                 setFetchParams({type: "rude", modifier: autoScrolledCount.current});
@@ -167,11 +177,8 @@ function MainView({showMenu, setShowMenu, addToHistory, popFromHistory, autoScro
 
             case SwipeDirection.DOWN:
                 setupTimer();
-                const lastViewed = popFromHistory();
-                if(lastViewed)
-                {
-                    setFetchParams({articleid: lastViewed });
-                }
+                const history = popFromHistory();
+                if(history) setData(history.article, history.backgroundImage, history.gifImage);
                 return;
         }
     }
@@ -186,7 +193,7 @@ function MainView({showMenu, setShowMenu, addToHistory, popFromHistory, autoScro
                 gifImage={gifImage}
                 onSetAutoscroll={setAutoscroll}
                 autoScroll={autoScroll}
-                addToHistory={addToHistory}
+                saveHistory={saveHistory}
                 onSwipe={doSwipe}
                 setupTimer={setupTimer}
                 showMenu={showMenu}

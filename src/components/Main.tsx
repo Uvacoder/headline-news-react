@@ -35,7 +35,7 @@ const keyMap = {
 interface Props
 {
     article: Article,
-    addToHistory: (article:Article | null) => void,
+    saveHistory: () => void,
     onSetAutoscroll: (scroll:boolean) => void,
     autoScroll: boolean,
     onSwipe: (dir:SwipeDirection) => void,
@@ -46,13 +46,13 @@ interface Props
     setShowMenu: (id:boolean) => void
 }
 
-function Main({article, autoScroll, showMenu, setShowMenu, addToHistory, gifImage, backgroundImage, onSetAutoscroll, onSwipe, setupTimer}:Props)
+function Main({article, autoScroll, showMenu, setShowMenu, saveHistory, gifImage, backgroundImage, onSetAutoscroll, onSwipe, setupTimer}:Props)
 {
     const navigation = useNavigate();
 
     const goToDetail = ()=>
     {
-        addToHistory(article);
+        saveHistory();
         navigation({pathname: "/details", search: createSearchParams({id: article.id.toString()}).toString()});
     }
 
