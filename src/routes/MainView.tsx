@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState, TouchEvent, AriaAttributes } from "react";
+import { useEffect, useRef, useState, TouchEvent } from "react";
 import { Article } from "@/types/Article";
 import ArticleFetchParams from "@/types/ArticleFetchParams";
 import Main, { SwipeDirection } from "@/components/Main";

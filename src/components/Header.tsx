@@ -2,15 +2,13 @@
 import stylex from "@stylexjs/stylex";
 import Menu from "@/components/Menu";
 import { Article } from "@/types/Article";
-import { Suspense, useState, useEffect } from "react";
-import axios, { AxiosResponse } from 'axios';
-import { BackgroundImage } from "@/types/Image";
 import ArticleSource from "./ArticleSource";
 
 
 const styles = stylex.create({
     header:{
         display: "flex",
+        alignItems: "center",
         columnGap: "1.5em",
         padding: "0.5em"
     }
@@ -33,10 +31,9 @@ function Header({showMenu, setShowMenu, gifImage, toggleAutoScroll, autoScroll, 
         <div {...stylex.props(styles.header)}>
             <Menu setShowMenu={setShowMenu} showMenu={showMenu} toggleAutoScroll={toggleAutoScroll} autoScroll={autoScroll} article={article} setupTimer={setupTimer}/>
             <img src={gifImage} style={{width: "58px", height:"58px", border: "2px solid white"}}/>
-            <Suspense>
-                <ArticleSource article={article} />
-            </Suspense>      
-        </div>);
+            <ArticleSource article={article} />
+        </div>
+    );
 }
 
 export default Header;
