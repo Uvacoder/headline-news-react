@@ -1,5 +1,4 @@
-import { useEffect, useState, HTMLAttributes} from 'react';
-import LoadingFallback from './LoadingFallback';
+import { HTMLAttributes} from 'react';
 
 interface Props extends HTMLAttributes<HTMLDivElement> {
     backgroundImage: string;
