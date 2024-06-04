@@ -14,7 +14,7 @@ const styles = stylex.create({
         overflow: "auto"
     },
     overlay: {
-        position: "absolute",
+        position: "fixed",
         top: "0",
         left: "0",
         right: "0",
