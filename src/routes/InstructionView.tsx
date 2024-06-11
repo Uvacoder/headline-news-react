@@ -52,6 +52,8 @@ function InstructionView()
         navigator("/view");
     }
 
+    if(!backgroundImage) return;
+
     return (<ImageContainer {...stylex.props(styles.mainContainer)} backgroundImage={backgroundImage} onClick={onToMainView}>
         <div {...stylex.props(styles.content)}>
             <img src={UpArrow} width={"64px"}/>

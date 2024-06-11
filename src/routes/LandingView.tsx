@@ -52,6 +52,8 @@ function LandingView()
             navigator("/instruction");
     }
 
+    if(!backgroundImage) return <></>;
+
     return(<ImageContainer {...stylex.props(styles.mainContainer)} backgroundImage={backgroundImage} onClick={onNextView}>
         <div {...stylex.props(styles.rowFull)}>
             {/* <MobileNavHint><IconArrowBigUp>Swipe Up for Next Headline</IconArrowBigUp></MobileNavHint> */}

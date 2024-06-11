@@ -1,24 +1,15 @@
 import stylex from "@stylexjs/stylex";
 import TextSection from "./TextSection";
 import { Article } from "@/types/Article";
-import { FetchData } from "@/types/FetchData";
 import { useNavigate } from "react-router-dom";
-import { useEffect, useState } from "react";
-import axios, { AxiosResponse } from 'axios';
-import { BackgroundImage } from "@/types/Image";
 import GoBack from "../assets/goback.svg";
 import ImageContainer from "./ImageContainer";
 
 const styles = stylex.create({
-    mainContainer: {
-        overflow: "auto"
-    },
     overlay: {
-        position: "fixed",
-        top: "0",
-        left: "0",
-        right: "0",
-        bottom: "0",
+        position: "absolute",
+        width: "100vw",
+        height: "100vh",
         backgroundColor: "black",
         opacity: "0.6",
         zIndex: "1"
@@ -42,23 +33,14 @@ const styles = stylex.create({
 
 interface Props
 {
-    articleData:FetchData<Article>
+    article: Article,
+    backgroundImage: string
 }
 
 
-function ArticleView({articleData}:Props)
+function ArticleView({ article, backgroundImage }: Props)
 {
     const navigate = useNavigate();
-    const article = articleData.read();
-    
-    const [backgroundImage, setBackgroundImage] = useState("");
-
-    useEffect(() => {
-        axios.get("api/getImage.php?type=details").then(
-            (res: AxiosResponse<BackgroundImage>) => setBackgroundImage(`${axios.defaults.baseURL}${res.data.url}`)
-        );
-    }, [])
-
 
     const onClick = ()=>
     {
@@ -80,7 +62,7 @@ function ArticleView({articleData}:Props)
     const header = getHeader();
 
     return(
-        <ImageContainer onClick={onClick} {...stylex.props(styles.mainContainer)} backgroundImage={backgroundImage}>
+        <ImageContainer onClick={onClick} backgroundImage={backgroundImage}>
             <div {...stylex.props(styles.overlay)}></div>
             <div {...stylex.props(styles.container)} >
                 <div {...stylex.props(styles.button)}>

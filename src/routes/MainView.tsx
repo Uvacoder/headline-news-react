@@ -2,7 +2,6 @@ import { useEffect, useRef, useState, TouchEvent } from "react";
 import { Article } from "@/types/Article";
 import ArticleFetchParams from "@/types/ArticleFetchParams";
 import Main, { SwipeDirection } from "@/components/Main";
-import LoadingFallback from "@/components/LoadingFallback";
 import { BackgroundImage } from "@/types/Image";
 import axios, { AxiosResponse } from "axios";
 import { ArticleHistory } from "@/types/ArticleHistory";
@@ -183,7 +182,7 @@ function MainView({showMenu, setShowMenu, addToHistory, popFromHistory, autoScro
         }
     }
 
-    if(!(article && backgroundImage && gifImage)) return <LoadingFallback />;
+    if(!(article && backgroundImage && gifImage)) return <></>;
 
     return (
         <div onTouchStart={onTouchStart} onTouchEnd={onTouchEnd} style={{ width: "100vw", height: "100%"}}>
@@ -199,7 +198,6 @@ function MainView({showMenu, setShowMenu, addToHistory, popFromHistory, autoScro
                 showMenu={showMenu}
                 setShowMenu={setShowMenu}
             />
-            { isLoading && <LoadingFallback /> }
         </div>
     );
 }

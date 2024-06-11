@@ -11,6 +11,7 @@ const ImageContainer = ({backgroundImage, children, style, ...restProps}: Props)
             style={{ 
                 ...style,
                 width: "100vw",
+                overflow: "auto",
                 height: "100vh",
                 backgroundImage: `url('${backgroundImage}')`,
                 backgroundRepeat: "no-repeat",

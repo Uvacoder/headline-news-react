@@ -49,6 +49,8 @@ function AboutUs()
       )
   }, [])
 
+  if(!content || !backgroundImage) return <></>;
+
   return (
     <ImageContainer {...stylex.props(styles.mainContainer)} onClick={() => { navigation("/view"); }} backgroundImage={backgroundImage}>    
       <div {...stylex.props(styles.button)}>

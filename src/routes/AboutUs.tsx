@@ -48,6 +48,8 @@ function AboutUs()
         (res: AxiosResponse<Content>) => setContent(res.data.text)
       )
   }, [])
+  
+  if(!content || !backgroundImage) return <></>;
 
   return (
     <ImageContainer {...stylex.props(styles.mainContainer)} onClick={() => { navigation("/view"); }} backgroundImage={backgroundImage}>    
